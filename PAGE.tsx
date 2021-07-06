@@ -1,0 +1,8 @@
+export const PAGE = {
+    HOME:'HOME',
+    ABOUT:'ABOUT',
+    MENUS:'MENUS',
+    UPCOMMING:'UPCOMING EVENTS',
+    CONTACT:'CONTACT',
+
+}
