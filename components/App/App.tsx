@@ -3,65 +3,64 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Pages from '../Pages/Pages';
 import styled,{css} from 'styled-components';
-import {BrowserRouter as Router} from 'react-router-dom';
+import {HashRouter,withRouter,RouteComponentProps} from 'react-router-dom';
 import {PAGE} from '../../PAGE';
 import {MEAL} from '../../MEAL';
+interface Props{
 
+};
 
-type Props={};
 type State={
    dropMenu:boolean;
    currentPage:string;
-   currentMeal:string;
-};
-let url = window.location.pathname;
-console.log("haha："+url);
-const map = new Map();
-map.set('/HOME',PAGE.HOME);
-map.set('/CONTACT',PAGE.CONTACT);
-map.set('/MENUS',PAGE.MENUS);
-map.set('/UPCOMING%20',PAGE.UPCOMMING);
-map.set('/ABOUT',PAGE.ABOUT);
+}
+
 
 class App extends React.Component<Props,State> {
-    constructor(props:any){
-       super(props);
 
+   constructor(props:Props){
+       super(props);
        this.state = {
           dropMenu:false,
-          currentPage:map.get(url),
-          currentMeal:MEAL.BREAKFAST,
+          currentPage:PAGE.HOME,
+         
        };
 
        this.toggleDropMenu = this.toggleDropMenu.bind(this);
        this.changePage = this.changePage.bind(this);
-       this.changeMeal = this.changeMeal.bind(this);
+       this.checkURL = this.checkURL.bind(this);
     }
+
 
     toggleDropMenu(dropMenu:boolean){
        this.setState({
           dropMenu:dropMenu,
        })
     }
+    
     changePage(pageName:string){
       this.setState({
           currentPage: pageName,
       })
+      console.log(" I have actived!!!")
     }
-    changeMeal(meal:string){
-      this.setState({
-          currentMeal:meal ,
-      })
-    }
+  
+    checkURL(){
+      const url = window.location.href;
+      console.log("haha："+url);
+      return url;
+   }
+
+
  render(){
-   const { dropMenu, currentPage,currentMeal } = this.state;
+   const { dropMenu, currentPage } = this.state;
 
     return  <div>
-          <Router >
-          <Header dropMenu={dropMenu} toggleDropMenu={this.toggleDropMenu} changePage={this.changePage} currentPage={currentPage}></Header>
-               <Pages changePage={this.changePage} currentMeal={currentMeal}  changeMeal = {this.changeMeal}></Pages>
+          <HashRouter >
+          <Header dropMenu={dropMenu} toggleDropMenu={this.toggleDropMenu} changePage={this.changePage}  currentPage={currentPage}></Header>
+               <Pages changePage={this.changePage} ></Pages>
               <Footer />
-          </Router>
+          </HashRouter>
        </div>
  }
 }

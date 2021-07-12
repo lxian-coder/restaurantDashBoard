@@ -15,7 +15,6 @@ class ScrollToTop extends Component<PropsType>{
     render(){
         return this.props.children;
     }
-
 }
 
 export default withRouter(ScrollToTop);

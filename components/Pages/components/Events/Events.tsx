@@ -6,8 +6,6 @@ import {Side2Warper} from '../SIde2/Side2';
 import {Line,ImgContainer,PageContainer,Iframe} from '../utils/Tools';
 import FetchData from './components/FetchData/FetchData';
 
-
-
 const Title = styled.div`
    padding-bottom: 40px;
    font-size: 48px;
@@ -17,12 +15,14 @@ const TitleText = styled.div`
    font-family: ${CSSCONST.FONT_RAKKAS};
    font-size:26px;
    text-align: justify;
+
    
   width:min(70%,220px);
 `;
 const SideFixed = styled.div`
      position: fixed;
      width: 29%;
+
 `;
 const TextTile = styled.div`
   font-family: ${CSSCONST.FONT_ALATA};
@@ -30,6 +30,8 @@ const TextTile = styled.div`
   margin-bottom: 20px;
   @media only screen and (max-width:700px){
       font-size: 26px;
+      margin-left: 5%;
+      margin-right: 5%;
      }
 `;
 const Text = styled.div`
@@ -38,6 +40,8 @@ const Text = styled.div`
   text-align: justify;
   @media only screen and (max-width:700px){
       font-size: 16px;
+      margin-left: 5%;
+      margin-right: 5%;
      }
 `;
 
@@ -47,6 +51,8 @@ const TitleDelete = styled.div`
      font-family: ${CSSCONST.FONT_ALATA};
      @media only screen and (max-width:700px){
       font-size: 26px;
+      margin-left: 5%;
+      margin-right: 5%;
      }
 `;
 
@@ -56,6 +62,9 @@ const TextDelete = styled.div`
   text-align: justify;
   @media only screen and (max-width:700px){
       font-size: 16px;
+      margin-left: 5%;
+      margin-right: 5%;
+  
      }
 `;
 
@@ -101,8 +110,7 @@ To book, please call 03 6375 1121. Payment will be taken on booking to confirm y
                   <Line></Line>
                    <TextTile>Group dining and Functions</TextTile>
                    <Text>At Sealife we are available for private functions such as Weddings, Birthday Celebrations and any other important occasion. We also provide a Degustation Option for smaller groups giving a more private and personal experience.
-<br/><br/>To learn more about our fabulous food and beverages whilst taking in the magnificent view of Waubs Bay, Phone us on (03)63751121.</Text>
-            
+<br/><br/>To learn more about our fabulous food and beverages whilst taking in the magnificent view of Waubs Bay, Phone us on (03)63751121.<br/><br/></Text>
               </Side2Warper>
       </PageContainer>
 

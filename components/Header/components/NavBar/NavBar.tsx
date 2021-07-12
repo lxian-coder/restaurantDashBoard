@@ -7,7 +7,6 @@ import littleLogo1 from '../../../../assets/littleLogo1.png';
 import littleLogo2 from '../../../../assets/littleLogo2.png';
 import LittleLogo from './components/LittleLogo/LittleLogo';
 import Button from './components/Button/Button';
-import Pages from '../../../Pages/Pages';
 import { PAGE } from '../../../../PAGE';
 
 interface Props {
@@ -18,7 +17,7 @@ const NavBarCenter = styled.div`
        display: flex;
        justify-content: center;
        background-color: white;
-       opacity: 0.9;
+       opacity: 0.97;
 
   `;
 const NavBarContainer = styled.div`
@@ -85,7 +84,7 @@ const Name = styled.div`
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      font-family: ${CSSCONST.FONT_ZILLA};
+      font-family: ${CSSCONST.FONT_NORICAN};
       font-size: 28px;
       height: 80px;
     }
@@ -98,12 +97,9 @@ const SmallScreenWarper =styled.div`
         display: flex;
         justify-content: space-between;
         height: 80px;
-    
-
        @media only screen and (min-width:961px){
            display: none;
        }
-
 `;
 const DisapearWhenSmall = styled.div`
   @media only screen and (max-width:960px){
@@ -112,15 +108,23 @@ const DisapearWhenSmall = styled.div`
 `;
 
 const ITEMS = [{
-
+    key:'home',
+    tabPage:PAGE.HOME,
+},{
+    key:'about',
+    tabPage:PAGE.ABOUT,
+},{
     key:'menus',
     tabPage:PAGE.MENUS,
 },{
     key:'upcomingEvents',
     tabPage:PAGE.UPCOMMING,
-}]
+},{
+    key:'contact',
+    tabPage:PAGE.CONTACT,
+},]
 
-const NavBar = (props:{dropMenu:boolean, toggleDropMenu:(dropMenu:boolean)=>void,changePage:(pageName:string)=>void,currentPage:String})=>{
+const NavBar = (props:{dropMenu:boolean, toggleDropMenu:(dropMenu:boolean)=>void,currentPage:String})=>{
   let showOrNot;
   if(props.dropMenu){
       showOrNot = 'flex';
@@ -132,18 +136,15 @@ const NavBar = (props:{dropMenu:boolean, toggleDropMenu:(dropMenu:boolean)=>void
               <NavBarContainerSpace>
               <Logo />
               <SmallScreenWarper>
-              <Button dropMenu={props.dropMenu} toggleDropMenu={props.toggleDropMenu}></Button>
-               <Name>SEA LIFE</Name>
-               <Warper>
-               <a href="https://www.facebook.com/SealifeBicheno"> <LittleLogo src={littleLogo1}></LittleLogo></a>
-              <a href="https://www.tripadvisor.com.au/Restaurant_Review-g261650-d728229-Reviews-Sealife_Bicheno-Bicheno_Glamorgan_Spring_Bay_Tasmania.html"> <LittleLogo src={littleLogo2}></LittleLogo></a>
-               </Warper>
+              
+               <Name>SeaLife Restaurant</Name>
+               <Button dropMenu={props.dropMenu} toggleDropMenu={props.toggleDropMenu}></Button>
               </SmallScreenWarper>
 
                <Navbar show = {showOrNot}>
                {ITEMS.map((item) => (
                    <Item active={props.currentPage === item.tabPage} key={item.key}  
-                   onclick={()=>{ props.changePage(item.tabPage);
+                   onclick={()=>{
                                    props.toggleDropMenu(false);
                    }}>{item.tabPage}</Item>
                ))}

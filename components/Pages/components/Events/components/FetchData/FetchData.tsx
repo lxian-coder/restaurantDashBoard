@@ -7,6 +7,12 @@ import axios from 'axios';
 const FetchWarper = styled.div`
  width: 100%;
  font-family: ${CSSCONST.FONT_ALATA};
+ @media only screen and (max-width:700px){
+     
+      margin-left: 5%;
+      margin-right: 5%;
+  
+     }
 `;
 
 const Title = styled.div`
