@@ -43,8 +43,7 @@ const FetchData = ()=>{
     },[]); 
 
     const getEvent = async()=>{
-
-        const data =  await axios.get('http://Sealife-env.eba-8gr2micd.ap-southeast-2.elasticbeanstalk.com/event/1').then(
+        const data =  await axios.get('https://test.sealiferestaurantbicheno.com/event/1').then(
             res=>{console.log(res); setItem({events:res.data})}
         );
     }

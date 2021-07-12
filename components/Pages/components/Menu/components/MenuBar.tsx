@@ -55,7 +55,7 @@ const BookTable = styled.div`
 `;
 
   type Props={
-      onclick:()=>void,
+
    };
   type State={
       currentMeal:string,
@@ -97,11 +97,7 @@ class MenuBar extends React.Component<Props,State>{
         this.changeMeal = this.changeMeal.bind(this);
         this.getScrollTop = this.getScrollTop.bind(this);
         this.scrollToAnchor = this.scrollToAnchor.bind(this);
-       
-    
     }
-  
-
    scrollToAnchor(anchorName:string){
     const finalPosition = findElementPosition1(anchorName);
     window.scrollTo({top:finalPosition, behavior:'smooth'});
@@ -138,7 +134,6 @@ class MenuBar extends React.Component<Props,State>{
     
    componentDidMount(){
         window.addEventListener('scroll',fillPosition);
-   
         window.addEventListener('scroll',this.getScrollTop);
    }
    componentWillUnmount(){
@@ -149,10 +144,10 @@ class MenuBar extends React.Component<Props,State>{
     render(){
           return <Side1Warper>
            <div style={{position:'fixed'}}>
-           <Title>Menuss.</Title>
+           <Title>Menus.</Title>
            <Ul>
              <Li onClick={(evt)=>{
-            // this.scrollToAnchor("Breakfast");
+             this.scrollToAnchor("Breakfast");
                this.changeMeal(MEAL.BREAKFAST);
              }} active={this.state.currentMeal === MEAL.BREAKFAST ? "black" : CSSCONST.GREY }>Breakfast</Li>
              <Li onClick={(evt)=>{
@@ -171,13 +166,10 @@ class MenuBar extends React.Component<Props,State>{
                this.changeMeal(MEAL.DESSERTS);
                this.scrollToAnchor("Daily Desserts");
              }} active={this.state.currentMeal === MEAL.DESSERTS ? "black" : CSSCONST.GREY }>Desserts</Li>
-          
             <Li onClick={(evt)=>{
                this.changeMeal(MEAL.REFRESHMENTS);
                this.scrollToAnchor("Sparkling & Rose Wine");
              }}active={this.state.currentMeal === MEAL.REFRESHMENTS ? "black" : CSSCONST.GREY }>Refreshments</Li>
-         
-             <Link style={{color:"black"}} to="/CONTACT"> <BookTable onClick={(evt)=>{this.props.onclick()}}>  Book a Table</BookTable> </Link> 
            </Ul>
            </div>
          </Side1Warper>

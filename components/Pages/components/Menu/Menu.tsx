@@ -116,7 +116,6 @@ left: 40%;
 z-index: 0;
 @media only screen and (max-width:380px){
   top: 14%;
-
 }
 `;
 
@@ -129,8 +128,7 @@ z-index: 0;
 @media only screen and (max-width:380px){
   top: 52%;
 
-}
-`;
+}`;
 const ImgEndWraper = styled.img`
 width: 37%;
 position: absolute;
@@ -138,7 +136,7 @@ top: 91%;
 left: 53%;
 z-index: 0;
 `;
-const Menu =(props:{onclick:()=>void}) =>{
+const Menu =() =>{
    　const [items, setItems] = useState([]);
 
    useEffect(()=>{
@@ -152,7 +150,7 @@ const Menu =(props:{onclick:()=>void}) =>{
    }
     return <PageContainer>
              <MenuContainer>
-                <MenuBar onclick={props.onclick}></MenuBar>
+                <MenuBar ></MenuBar>
                <Side2Warper >
                  <MenuSide2Warper>
                  <ImgStartWraper src={menu1}></ImgStartWraper>

@@ -28,7 +28,7 @@ const NavBarContainerSpace = styled.div`
      display: flex;
      justify-content: space-between;
      max-width:100% ;
-     @media only screen and (max-width: 960px){
+     @media only screen and (max-width: 660px){
         display: flex;
         flex-direction: column;
         margin-right: 2%;
@@ -39,7 +39,7 @@ const NavBarContainerSpace = styled.div`
 const Logo = styled.img`
    max-width: 182px;
    max-height: 139px;
-   @media only screen and (max-width: 960px){
+   @media only screen and (max-width: 660px){
         display: none;
     }
     
@@ -62,7 +62,7 @@ const Navbar = styled.nav<Props>`
        	font-weight: 500;
         max-width: 100%;
 
-   @media only screen and  (max-width:960px){
+   @media only screen and  (max-width:660px){
         display: ${p => p.show};
         flex-direction: column;
         height: 300px;;
@@ -70,7 +70,7 @@ const Navbar = styled.nav<Props>`
         justify-content: space-around;
         margin-top: 40px;
     }
-       @media only screen and (min-width: 961px){
+       @media only screen and (min-width: 661px){
            display: flex;
            max-width: 35%;
            width: 100%;
@@ -80,7 +80,7 @@ const Navbar = styled.nav<Props>`
 `;
 
 const Name = styled.div`
-    @media only screen and (max-width:960px){
+    @media only screen and (max-width:760px){
       display: flex;
       justify-content: center;
       align-items: flex-end;
@@ -88,7 +88,7 @@ const Name = styled.div`
       font-size: 28px;
       height: 80px;
     }
-    @media only screen and (min-width: 961px){
+    @media only screen and (min-width: 661px){
         display: none;
     }
 `;
@@ -97,31 +97,22 @@ const SmallScreenWarper =styled.div`
         display: flex;
         justify-content: space-between;
         height: 80px;
-       @media only screen and (min-width:961px){
+       @media only screen and (min-width:661px){
            display: none;
        }
 `;
 const DisapearWhenSmall = styled.div`
-  @media only screen and (max-width:960px){
+  @media only screen and (max-width:660px){
            display: none;
        }
 `;
 
 const ITEMS = [{
-    key:'home',
-    tabPage:PAGE.HOME,
-},{
-    key:'about',
-    tabPage:PAGE.ABOUT,
-},{
     key:'menus',
     tabPage:PAGE.MENUS,
 },{
     key:'upcomingEvents',
     tabPage:PAGE.UPCOMMING,
-},{
-    key:'contact',
-    tabPage:PAGE.CONTACT,
 },]
 
 const NavBar = (props:{dropMenu:boolean, toggleDropMenu:(dropMenu:boolean)=>void,currentPage:String})=>{

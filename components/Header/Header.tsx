@@ -25,7 +25,7 @@ class Header extends React.Component<Props>{
 
    render(){
       return <HeaderWarper>
-      <Banner   onclick={()=>{ this.props.changePage("CONTACT")}} />
+      <Banner  />
       <NavBar currentPage={this.props.currentPage} dropMenu={this.props.dropMenu} toggleDropMenu={this.props.toggleDropMenu}/>
     </HeaderWarper> ;
  }
