@@ -62,7 +62,6 @@ const BookTable = styled.div`
  
   };
 
-let a = 1;
 let lunchPosition:number;
 let dinnerPosition:number;
 let childrenPosition:number;

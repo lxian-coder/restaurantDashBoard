@@ -15,7 +15,8 @@ import bottle from '../../../../assets/bottle.jpg';
 import glass from '../../../../assets/glass.jpg';
 import {CATEGORY} from '../../../../Category';
 import MenuBar from './components/MenuBar';
-
+import { render } from 'react-dom';
+const URL ='https://test.sealiferestaurantbicheno.com/';
 
 interface Props2{
   showOrNot:string;
@@ -136,54 +137,79 @@ top: 91%;
 left: 53%;
 z-index: 0;
 `;
-const Menu =() =>{
-   　const [items, setItems] = useState([]);
+interface menuData{
+  id:number,
+  category:String,
+  description:String,
+  price:String,
+  price2:String,
+}
 
-   useEffect(()=>{
-       getMenus();
-  },[])
+interface State{
+  menus:menuData[],
+ 
+}
+ class Menu extends React.Component<any,State>{
+    state:Readonly<State>={
+      menus:[],
+      
+    }
 
-   const getMenus = async()=>{
-     const data = await  axios.get('https://test.sealiferestaurantbicheno.com/menu');
-     setItems(data.data);
-     console.log(data);
+   constructor(props:any){
+     super(props);
+    this.getMenus= this.getMenus.bind(this);
    }
-    return <PageContainer>
-             <MenuContainer>
-                <MenuBar ></MenuBar>
-               <Side2Warper >
-                 <MenuSide2Warper>
-                 <ImgStartWraper src={menu1}></ImgStartWraper>
-                   <ImgMiddleWraper src={menu2}></ImgMiddleWraper>
-                   <ImgEndWraper src={menu3}></ImgEndWraper>
 
-                 {CATEGORY.map(({key,value})=>{
-                  return  <UL>
-                           <SpaceAdd show={ key === "Lunch" || key ==="Entrée" || key === "Children" || key === "Sparkling & Rose Wine" || key === "Daily Desserts" ? "flex" : "none" }></SpaceAdd>
-                          <CategoryBottleWarper >
-                          <Category id={key} >{key}</Category>
-                          <BottleGlassWarper showOrNot={key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "flex":"none"}>
-                              <BottleWarper src={glass}></BottleWarper>
-                              <BottleWarper src={bottle}></BottleWarper>
-                            </BottleGlassWarper>
-                            </CategoryBottleWarper>
-                            {items.map((ele)=>{
-                            if(ele.category === value){
-                              return  <LiLine>
-                              <div  key={ele.id}>{ele.description}</div>
-                              <PriceWarper>
-                               <Price2Warper>{ele.price2==='' ? '':'$'}{ele.price2}</Price2Warper>
-                               <Price1Warper key={ele.id} style={isNaN(ele.price) ? {width:"10.625",justifyContent:"flex-end",whiteSpace:"nowrap"}:{}}>{ele.price === "Price Upon Request" || ele.price ==="" ? "":"$"}{ele.price}</Price1Warper>
-                              </PriceWarper>
-                          </LiLine>
-                      }})}
-                  </UL>
-                 })}
-                 <div style={{fontSize:"24px",fontFamily:CSSCONST.FONT_ASAR}}>Non Alcoholic Drink Available<br/>Menu Indicative Only - Meals and Prices Subject to Change</div>
-                   </MenuSide2Warper>
-               </Side2Warper>
-    </MenuContainer>
-    </PageContainer>;
+  async getMenus(){
+        const data = await axios.get(URL +'menu').then(res=>{
+          this.setState({menus:res.data})
+        });
+        console.log(data);
+    } 
+  
+  componentDidMount(){
+      this.getMenus();
+    }
+
+   render(){
+    return <PageContainer>
+    <MenuContainer>
+       <MenuBar ></MenuBar>
+      <Side2Warper >
+        <MenuSide2Warper>
+        <ImgStartWraper src={menu1}></ImgStartWraper>
+          <ImgMiddleWraper src={menu2}></ImgMiddleWraper>
+          <ImgEndWraper src={menu3}></ImgEndWraper>
+
+        {CATEGORY.map(({key,value})=>{
+         return  <UL>
+                  <SpaceAdd show={ key === "Lunch" || key ==="Entrée" || key === "Children" || key === "Sparkling & Rose Wine" || key === "Daily Desserts" ? "flex" : "none" }></SpaceAdd>
+                 <CategoryBottleWarper >
+                 <Category id={key} >{key}</Category>
+                 <BottleGlassWarper showOrNot={key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "flex":"none"}>
+                     <BottleWarper src={glass}></BottleWarper>
+                     <BottleWarper src={bottle}></BottleWarper>
+                   </BottleGlassWarper>
+                   </CategoryBottleWarper>
+                   {this.state.menus.map((ele)=>{
+                   if(ele.category === value){
+                     return  <LiLine>
+                     <div  key={ele.id}>{ele.description}</div>
+                     <PriceWarper>
+                      <Price2Warper>{ele.price2==='' ? '':'$'}{ele.price2}</Price2Warper>
+                      <Price1Warper key={ele.id} style={isNaN(Number(ele.price)) ? {width:"10.625",justifyContent:"flex-end",whiteSpace:"nowrap"}:{}}>{ele.price === "Price Upon Request" || ele.price ==="" ? "":"$"}{ele.price}</Price1Warper> 
+                     </PriceWarper>
+                 </LiLine>
+             }})} 
+         </UL>
+        })}
+        <div style={{fontSize:"24px",fontFamily:CSSCONST.FONT_ASAR}}>Non Alcoholic Drink Available<br/>Menu Indicative Only - Meals and Prices Subject to Change</div>
+          </MenuSide2Warper>
+      </Side2Warper>
+</MenuContainer>
+</PageContainer>;
+}
+    
 }
 
 export default Menu;

@@ -2,16 +2,15 @@ import React,{useState,useEffect} from 'react';
 import styled,{css} from 'styled-components';
 import CSSCONST from '../../../../../../cssConst';
 import axios from 'axios';
-
+import { data } from 'autoprefixer';
+const URL = 'https://test.sealiferestaurantbicheno.com/';
 
 const FetchWarper = styled.div`
  width: 100%;
  font-family: ${CSSCONST.FONT_ALATA};
  @media only screen and (max-width:700px){
-     
       margin-left: 5%;
       margin-right: 5%;
-  
      }
 `;
 
@@ -29,31 +28,55 @@ const Text = styled.div`
       font-size: 16px;
      }
 `;
+interface Props{
+  
+}
 
 
-const FetchData = ()=>{
-    　const [item, setItem] = useState({
-        events:{
+let getData;
+class FetchData extends React.Component<Props>{
+     state = {
+        stateData : {
             title:String,
             description:String,
         }
-    });
-    useEffect(()=>{
-        getEvent();
-    },[]); 
-
-    const getEvent = async()=>{
-        const data =  await axios.get('https://test.sealiferestaurantbicheno.com/event/1').then(
-            res=>{console.log(res); setItem({events:res.data})}
-        );
     }
-    console.log(item.events)
-    
+   constructor(props:Props){
+       super(props);
 
-    return <FetchWarper>
-              <Title>{item.events.title}</Title>
-              <Text>{item.events.description}</Text>
-          </FetchWarper>
+      this.getEvent = this.getEvent.bind(this);
+
+   }
+
+   async getEvent(){
+       let data = await axios.get(URL+'event/1').then(({data})=>data);
+
+        // let data = await axios.get(URL+'event/1').then(res=>{
+        //     this.setState({
+        //         stateDate:res.data,
+        //     })
+        // });
+       return data;
 }
 
+componentDidMount(){
+   let data2=  this.getEvent();
+  data2.then(res=>{
+    this.setState({stateData:res});
+   });
+
+}
+
+render(){
+    return <FetchWarper>
+             <Title>{this.state.stateData.title}</Title>
+             <Text>{this.state.stateData.description}</Text>   
+
+             <Text>I am Trying</Text>
+           </FetchWarper>
+}
+
+}
+
+  
 export default FetchData;

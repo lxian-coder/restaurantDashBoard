@@ -5,6 +5,8 @@ import {Side1Warper} from '../Side1/Side1';
 import {Side2Warper} from '../SIde2/Side2';
 import {Line,ImgContainer,PageContainer,Iframe} from '../utils/Tools';
 import FetchData from './components/FetchData/FetchData';
+import axios from 'axios';
+const URL = 'https://test.sealiferestaurantbicheno.com/';
 
 const Title = styled.div`
    padding-bottom: 40px;
@@ -67,25 +69,33 @@ const TextDelete = styled.div`
   
      }
 `;
+interface Props{
 
-const Events = ()=>{
-      return <PageContainer>
-               <Side1Warper>
-                     <SideFixed>
-                     <Title>Upcoming <br/>Events.</Title>
-                      <TitleText>
-                       See what’s happening at Sealife! Check back often to learn about exciting menu updates, new wine, special events, and more.
-                      </TitleText>
-                     </SideFixed>
+}
+interface State{
+  
+}
+class Events extends React.Component<Props,State>{
 
-               </Side1Warper>
-              <Side2Warper>
-                   <FetchData></FetchData>
-                   <Line></Line>
-                   <TitleDelete>
-                     See Life & Drink It
-                   </TitleDelete>
-                   <TextDelete>
+
+     render(){
+          return <PageContainer>
+          <Side1Warper>
+                <SideFixed>
+                <Title>Upcoming <br/>Events.</Title>
+                 <TitleText>
+                  See what’s happening at Sealife! Check back often to learn about exciting menu updates, new wine, special events, and more.
+                 </TitleText>
+                </SideFixed>
+
+          </Side1Warper>
+         <Side2Warper>
+              <FetchData ></FetchData>
+              <Line></Line>
+              <TitleDelete>
+                See Life & Drink It
+              </TitleDelete>
+              <TextDelete>
 
 Event Details<br/>
 Friday, 10 September 2021<br/>
@@ -106,14 +116,16 @@ Seating will be in tables of 8, so get your friends together for this special ev
 To book, please call 03 6375 1121. Payment will be taken on booking to confirm your spot.<br/><br/>
 
 (Matched wines = 3 standard drinks. Additional drinks are available for purchase on the night.)
-                   </TextDelete>
-                  <Line></Line>
-                   <TextTile>Group dining and Functions</TextTile>
-                   <Text>At Sealife we are available for private functions such as Weddings, Birthday Celebrations and any other important occasion. We also provide a Degustation Option for smaller groups giving a more private and personal experience.
+              </TextDelete>
+             <Line></Line>
+              <TextTile>Group dining and Functions</TextTile>
+              <Text>At Sealife we are available for private functions such as Weddings, Birthday Celebrations and any other important occasion. We also provide a Degustation Option for smaller groups giving a more private and personal experience.
 <br/><br/>To learn more about our fabulous food and beverages whilst taking in the magnificent view of Waubs Bay, Phone us on (03)63751121.<br/><br/></Text>
-              </Side2Warper>
-      </PageContainer>
+         </Side2Warper>
+ </PageContainer>
 
+     }
+     
 };
 
 export default Events;
