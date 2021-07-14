@@ -147,7 +147,20 @@ font-size:12px;
 const DeleBtn = styled.button`
 width: 60px;
 font-size:12px;
+`;
+const BtnArea = styled.div`
+  display: flex;
 
+`;
+const DataArea = styled.div`
+ display: flex;
+ justify-content: space-between;
+width: 80%;
+`;
+const DataBtnWarper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 `;
 interface menuData{
   id:number,
@@ -317,20 +330,28 @@ componentDidMount(){
                    {this.state.menus.map((ele)=>{
                    if(ele.category === value){
                      return <div key={ele.id}>
-                   <LiLine key={ele.id}>
+                   <LiLine  key={ele.id}>
+                     <DataBtnWarper>
+                     <DataArea>
                      <div>{ele.description}</div>
                     
-                     <PriceWarper>
-                      <Price2Warper>{ele.price2==='' ? '':'$'}{ele.price2}</Price2Warper>
-                      <Price1Warper style={isNaN(Number(ele.price)) ? {width:"10.625",justifyContent:"flex-end",whiteSpace:"nowrap"}:{}}>{ele.price === "Price Upon Request" || ele.price ==="" ? "":"$"}{ele.price}</Price1Warper> 
-                     </PriceWarper>
-                     <DeleBtn  style={{display:this.state.BtnShow === 1 || this.state.selectID !== ele.id ? "flex":"none" }} onClick={()=>{
+                    <PriceWarper>
+                     <Price2Warper>{ele.price2==='' ? '':'$'}{ele.price2}</Price2Warper>
+                     <Price1Warper style={isNaN(Number(ele.price)) ? {width:"10.625",justifyContent:"flex-end",whiteSpace:"nowrap"}:{}}>{ele.price === "Price Upon Request" || ele.price ==="" ? "":"$"}{ele.price}</Price1Warper> 
+                    </PriceWarper>
+                     </DataArea>
+                    <BtnArea>
+                    <DeleBtn  style={{display:this.state.BtnShow === 1 || this.state.selectID !== ele.id ? "flex":"none" }} onClick={()=>{
                        this.changeDelBtn(2);this.changeSelectID(ele.id);}}>UPDATE</DeleBtn>
           
                      <DeleBtn style={{display:this.state.BtnShow === 1 || this.state.selectID !== ele.id ? "flex":"none" }}onClick={()=>{this.changeDelBtn(3); this.changeSelectID(ele.id);}}>DELETE</DeleBtn>
                      <DeleOptionBtn style={{display:this.state.BtnShow === 3 && this.state.selectID === ele.id  ? "flex":"none" }} onClick={()=>{this.deleteMenu(ele.id)}} >CONFIRM</DeleOptionBtn>
                      <DeleOptionBtn  style={{display:(this.state.BtnShow === 3 ) && this.state.selectID === ele.id ? "flex":"none" }}onClick={()=>this.changeDelBtn(1)}>CANCEL</DeleOptionBtn>
-                 </LiLine>
+                 
+                    </BtnArea>
+                     </DataBtnWarper>
+                   
+                    </LiLine>
                  <LiLine key={ele.description}>
                  <form  style={{display:this.state.BtnShow === 2 && this.state.selectID === ele.id ? "flex":"none" }} onSubmit={(e:any)=>{ this.patchMenuForm(e);}} >
               
