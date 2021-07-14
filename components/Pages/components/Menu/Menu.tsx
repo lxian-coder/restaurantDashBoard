@@ -175,6 +175,7 @@ interface State{
   BtnShow:number,
   selectID:number,
   category:string,
+  success:boolean,
 }
 let a = new FormData();
  class Menu extends React.Component<any,State>{
@@ -183,6 +184,7 @@ let a = new FormData();
       BtnShow:1,
       selectID:null,
       category:'',
+      success:false,
     }
 
    constructor(props:any){
@@ -242,6 +244,8 @@ let a = new FormData();
      console.log(res);
      this.getMenus();
      this.changeDelBtn(1);
+    // this.setState({category:''})
+     this.successNotion(true);
 
    },(error)=>
      console.log(error));
@@ -272,7 +276,6 @@ let a = new FormData();
 
 
  async deleteMenu(id:number){
-
   const newMenu = await axios({
     method:'delete',
     url:URL+'menu' + "/"+ id,
@@ -286,7 +289,11 @@ let a = new FormData();
   },(error)=>
     console.log(error));
 }
-
+successNotion(flag:boolean){
+  this.setState({
+    success:flag
+  })
+}
 
 componentDidMount(){
  this.getMenus();
@@ -313,18 +320,22 @@ componentDidMount(){
                    </CategoryBottleWarper>
                    <LiLine>
                       <button style={{display:this.state.category === key ? "none":'' }} onClick={()=>this.setState({category:key})}>ADD NEW</button>
+                      <div style={{display:this.state.success ? "":'none' }}>Successfully Added</div>
                    </LiLine>
                    <LiLine style={{display:this.state.category === key ? "":'none'}}>
                          <form  onSubmit={(e:any)=>this.submitNewMenuForm(e)} >
                           <label htmlFor="description">description:</label>
-                            <input  type='text' name='description' id='des1' required></input>
+                            <input  type='text' name='description' id='des1' required onClick={()=>this.successNotion(false)}></input>
                            <label  htmlFor="price">price:</label> 
-                            <input required   type='text' name='price' id='price1'></input>
+                            <input required onClick={()=>this.successNotion(false)}  type='text' name='price' id='price1'></input>
                             <label htmlFor='price2' style={{display:key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "":"none"}}>price2:</label>
-                            <input   type='text' name="price2" id='price21' style={{display:key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "":"none"}}></input>
+                            <input  onClick={()=>this.successNotion(false)} type='text' name="price2" id='price21' style={{display:key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "":"none"}}></input>
                             <input type='text' name="category" id='category' style={{display:'none'}} defaultValue={value}></input>
                              <input type='submit' value='ADD'  ></input>
-                             <button  onClick={()=>this.setState({category:''})}>BACK</button>
+                             <button  onClick={(e)=>{
+                                e.preventDefault();
+                               this.successNotion(false);
+                               this.setState({category:''});}}>BACK</button>
                         </form> 
                    </LiLine>
                    {this.state.menus.map((ele)=>{
