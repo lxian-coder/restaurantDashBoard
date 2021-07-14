@@ -101,7 +101,7 @@ const SmallScreenWarper =styled.div`
            display: none;
        }
 `;
-const DisapearWhenSmall = styled.div`
+const DisappearWhenSmall = styled.div`
   @media only screen and (max-width:660px){
            display: none;
        }
@@ -136,17 +136,17 @@ const NavBar = (props:{dropMenu:boolean, toggleDropMenu:(dropMenu:boolean)=>void
                {ITEMS.map((item) => (
                    <Item active={props.currentPage === item.tabPage} key={item.key}  
                    onclick={()=>{
-                                   props.toggleDropMenu(false);
+                                 props.toggleDropMenu(false);
                    }}>{item.tabPage}</Item>
                ))}
                </Navbar>
 
-               <DisapearWhenSmall>
+               <DisappearWhenSmall>
                <Warper>
               <a href="https://www.facebook.com/SealifeBicheno"> <LittleLogo src={littleLogo1}></LittleLogo></a>
               <a href="https://www.tripadvisor.com.au/Restaurant_Review-g261650-d728229-Reviews-Sealife_Bicheno-Bicheno_Glamorgan_Spring_Bay_Tasmania.html"> <LittleLogo src={littleLogo2}></LittleLogo></a>
                </Warper>
-               </DisapearWhenSmall>
+               </DisappearWhenSmall>
 
               </NavBarContainerSpace>
     </NavBarContainer>

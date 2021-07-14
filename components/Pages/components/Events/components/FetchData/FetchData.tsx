@@ -72,7 +72,6 @@ render(){
              <Title>{this.state.stateData.title}</Title>
              <Text>{this.state.stateData.description}</Text>   
 
-             <Text>I am Trying</Text>
            </FetchWarper>
 }
 

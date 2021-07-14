@@ -43,12 +43,11 @@ class Pages extends React.Component<Props,State>{
   changePageWithURL(){
     let URL = this.props.history.location.pathname;
     this.props.changePage(map.get(URL));
-    console.log("++++++++"+URL);
  
   }
   componentDidMount(){
     // fix the route problem
-    this.changePageWithURL();
+    // this.changePageWithURL();
     UNLISTEN = this.props.history.listen(route =>{
       this.changePageWithURL();
     })
@@ -64,7 +63,7 @@ class Pages extends React.Component<Props,State>{
       <Switch>
       <PageWarper>
         <Route path="/" exact component={Menu}></Route> 
-        <Route path="/MENUS" ><Menu  /></Route>
+        <Route path="/MENUS" component={Menu} ></Route>
          <Route path="/UPCOMING EVENTS"  component={EVENTS}></Route>  
   </PageWarper>
       </Switch>

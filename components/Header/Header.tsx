@@ -15,7 +15,6 @@ const HeaderWarper = styled.header`
 interface Props  {
    dropMenu:boolean,
    toggleDropMenu:(dropMenu:boolean) => void,
-   changePage:(pageName:String)=>void,
    currentPage:String 
 }
 class Header extends React.Component<Props>{

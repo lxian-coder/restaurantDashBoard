@@ -14,28 +14,17 @@ type State={
    currentPage:string;
   
 };
-let url = window.location.pathname;
-console.log("haha："+url);
-const map = new Map();
-map.set('/HOME',PAGE.HOME);
-map.set('/CONTACT',PAGE.CONTACT);
-map.set('/MENUS',PAGE.MENUS);
-map.set('/UPCOMING%20',PAGE.UPCOMMING);
-map.set('/ABOUT',PAGE.ABOUT);
 
 class App extends React.Component<Props,State> {
     constructor(props:any){
        super(props);
-
        this.state = {
           dropMenu:false,
-          currentPage:map.get(url),
-      
+          currentPage:PAGE.MENUS,
        };
 
        this.toggleDropMenu = this.toggleDropMenu.bind(this);
        this.changePage = this.changePage.bind(this);
-    
     }
 
     toggleDropMenu(dropMenu:boolean){
@@ -49,13 +38,14 @@ class App extends React.Component<Props,State> {
       })
     }
 
+
  render(){
    const { dropMenu, currentPage } = this.state;
 
     return  <div>
           <Router >
-          <Header dropMenu={dropMenu} toggleDropMenu={this.toggleDropMenu} changePage={this.changePage} currentPage={currentPage}></Header>
-               <Pages changePage={this.changePage}   ></Pages>
+          <Header dropMenu={dropMenu} toggleDropMenu={this.toggleDropMenu}  currentPage={currentPage}></Header>
+               <Pages changePage={this.changePage}></Pages>
               <Footer />
           </Router>
        </div>

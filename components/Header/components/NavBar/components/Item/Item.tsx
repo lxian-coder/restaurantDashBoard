@@ -18,10 +18,8 @@ const ItemName = styled.div<Props>`
             color:${CSSCONST.BLUE};
             transition: 0.5s;
         }
-    
         &:active{
             color:lightblue;
-           
         }
         &::after{
              content: " ";
