@@ -17,7 +17,8 @@ import { findDOMNode, render } from 'react-dom';
 import { electron } from 'webpack';
 import Button from '../../../Header/components/NavBar/components/Button/Button';
 const URL ='https://test.sealiferestaurantbicheno.com/';
-
+//const GREEN =" #c7edcc";
+const GREEN =" rgb(4, 170, 109)";
 interface Props2{
   showOrNot:string;
 }
@@ -113,7 +114,7 @@ const SpaceAdd = styled.div<Props3>`
 `;
 
 const SuccessNote = styled.div`
-  color:rgb(4, 170, 109);
+  color:${GREEN};
 `;
 interface propsBtn{
   add:any
@@ -128,14 +129,13 @@ border-radius: 8px;
 margin-left:5px;
 font-weight: 600;
 color: white;
-background-color: rgb(4, 170, 109);
+background-color: ${GREEN};
 &.add {
   height: 45px;
   }
 &.con{
   background-color:orangered;
 }
-
 `;
 const BtnArea = styled.div`
   display: flex;
@@ -159,7 +159,7 @@ const Textarea = styled.textarea`
         font-size: 16px;
 `;
 const Label = styled.label`
-   color:rgb(4, 170, 109);
+   color:${GREEN};
 `;
 const Form = styled.form`
    display: flex;
@@ -175,7 +175,7 @@ align-items: center;
 border-radius: 8px;
 font-weight: 600;
 color: white;
-background-color: rgb(4, 170, 109);
+background-color: ${GREEN};
  
 `;
 const BackBtn  = styled.button`
@@ -188,7 +188,7 @@ align-items: center;
 border-radius: 8px;
 font-weight: 600;
 color: white;
-background-color: rgb(4, 170, 109);
+background-color: ${GREEN};
 `;
 interface menuData{
   id:number,
@@ -253,7 +253,6 @@ let a = new FormData();
  async submitNewMenuForm(e:any){
    e.preventDefault();
    const fd = new FormData(e.target);
-   
    const body = {
      description:fd.get("description"),
      price:fd.get("price"),
@@ -403,7 +402,6 @@ componentDidMount(){
              </Form> 
                  </LiLine>
                      </div> 
-                      
              }})} 
          </UL>
         })}
