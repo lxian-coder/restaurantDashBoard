@@ -111,42 +111,31 @@ const SpaceAdd = styled.div<Props3>`
  width: 100%;
  height: 4.375rem;
 `;
-const ImgStartWraper = styled.img`
-width: 50%;
-position: absolute;
-top: 13.5%;
-left: 40%;
-z-index: 0;
-@media only screen and (max-width:380px){
-  top: 14%;
+
+const SuccessNote = styled.div`
+  color:rgb(4, 170, 109);
+`;
+interface propsBtn{
+  add:any
 }
-`;
-
-const ImgMiddleWraper = styled.img`
-width: 40%;
-position: absolute;
-top: 51%;
-left: 48%;
-z-index: 0;
-@media only screen and (max-width:380px){
-  top: 52%;
-
-}`;
-const ImgEndWraper = styled.img`
-width: 37%;
-position: absolute;
-top: 91%;
-left: 53%;
-z-index: 0;
-`;
-const DeleOptionBtn = styled.button`
-width: 60px;
-font-size:12px;
-
-`;
 const DeleBtn = styled.button`
-width: 60px;
+width: 80px;
 font-size:12px;
+display:flex;
+justify-content: center;
+align-items: center;
+border-radius: 8px;
+margin-left:5px;
+font-weight: 600;
+color: white;
+background-color: rgb(4, 170, 109);
+&.add {
+  height: 45px;
+  }
+&.con{
+  background-color:orangered;
+}
+
 `;
 const BtnArea = styled.div`
   display: flex;
@@ -161,6 +150,45 @@ const DataBtnWarper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+`;
+const Input = styled.input`
+       width: 50px;
+`;
+const Textarea = styled.textarea`
+        width:450px;
+        font-size: 16px;
+`;
+const Label = styled.label`
+   color:rgb(4, 170, 109);
+`;
+const Form = styled.form`
+   display: flex;
+   flex-direction: column;
+`;
+const InputBtn = styled.input`
+ height:35px;
+ margin-top:5px;
+ font-size:12px;
+display:flex;
+justify-content: center;
+align-items: center;
+border-radius: 8px;
+font-weight: 600;
+color: white;
+background-color: rgb(4, 170, 109);
+ 
+`;
+const BackBtn  = styled.button`
+ height:35px;
+ margin-top:5px;
+ font-size:12px;
+display:flex;
+justify-content: center;
+align-items: center;
+border-radius: 8px;
+font-weight: 600;
+color: white;
+background-color: rgb(4, 170, 109);
 `;
 interface menuData{
   id:number,
@@ -209,6 +237,7 @@ let a = new FormData();
   
   async getMenus(){
         const data = await axios.get(URL +'menu').then(res=>{
+          res.data.sort(sortID)
           this.setState({menus:res.data})
           console.log(res);
         });
@@ -217,11 +246,8 @@ let a = new FormData();
         function sortID(a:menuData,b:menuData) {
           return a.id - b.id;
         }
-       this.setState({
-         menus:this.state.menus.sort(sortID)
-       }) 
         console.log(this.state.menus);
-    } 
+    }
 
     
  async submitNewMenuForm(e:any){
@@ -254,13 +280,11 @@ let a = new FormData();
  async patchMenuForm(e:any){
   e.preventDefault()
    const fd = new FormData(e.target);
-   
    const body = {
      description:fd.get("description"),
      price:fd.get("price"),
      price2:fd.get("price2"),
    };
-   
   await axios({
      method:'patch',
      url:URL+'menu' + '/' + fd.get("id"),
@@ -269,7 +293,6 @@ let a = new FormData();
    .then((res)=>{
      console.log(res);
      this.getMenus();
-    
    },(error)=>
      console.log(error));
  }
@@ -319,24 +342,25 @@ componentDidMount(){
                    </BottleGlassWarper>
                    </CategoryBottleWarper>
                    <LiLine>
-                      <button style={{display:this.state.category === key ? "none":'' }} onClick={()=>this.setState({category:key})}>ADD NEW</button>
-                      <div style={{display:this.state.success ? "":'none' }}>Successfully Added</div>
+                      <DeleBtn className="add" style={{display:this.state.category === key ? "none":'' }} onClick={()=>this.setState({category:key})}>ADD NEW</DeleBtn>
+                      <SuccessNote style={{display:this.state.success ? "":'none' }}>Successfully Added!</SuccessNote>
                    </LiLine>
                    <LiLine style={{display:this.state.category === key ? "":'none'}}>
-                         <form  onSubmit={(e:any)=>this.submitNewMenuForm(e)} >
-                          <label htmlFor="description">description:</label>
-                            <input  type='text' name='description' id='des1' required onClick={()=>this.successNotion(false)}></input>
-                           <label  htmlFor="price">price:</label> 
-                            <input required onClick={()=>this.successNotion(false)}  type='text' name='price' id='price1'></input>
-                            <label htmlFor='price2' style={{display:key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "":"none"}}>price2:</label>
-                            <input  onClick={()=>this.successNotion(false)} type='text' name="price2" id='price21' style={{display:key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "":"none"}}></input>
+                         <Form  onSubmit={(e:any)=>this.submitNewMenuForm(e)} >
+                          <Label htmlFor="description">description:</Label>
+                            <Textarea   name='description' id='des1' required onClick={()=>this.successNotion(false)}></Textarea>
+                           <Label  htmlFor="price">price:</Label> 
+                            <Input className="price" required onClick={()=>this.successNotion(false)}  name='price' id='price1'></Input>
+                            <Label htmlFor='price2' style={{display:key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "":"none"}}>price2/one glass:</Label>
+                            <Input className="price" onClick={()=>this.successNotion(false)}  name="price2" id='price21' style={{display:key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "":"none"}}></Input>
                             <input type='text' name="category" id='category' style={{display:'none'}} defaultValue={value}></input>
-                             <input type='submit' value='ADD'  ></input>
-                             <button  onClick={(e)=>{
+                             <InputBtn type='submit' value='ADD'  ></InputBtn>
+                             <BackBtn  onClick={(e)=>{
                                 e.preventDefault();
                                this.successNotion(false);
-                               this.setState({category:''});}}>BACK</button>
-                        </form> 
+                               this.setState({category:''});}}>BACK</BackBtn>
+                        </Form>
+                        
                    </LiLine>
                    {this.state.menus.map((ele)=>{
                    if(ele.category === value){
@@ -355,28 +379,28 @@ componentDidMount(){
                     <DeleBtn  style={{display:this.state.BtnShow === 1 || this.state.selectID !== ele.id ? "flex":"none" }} onClick={()=>{
                        this.changeDelBtn(2);this.changeSelectID(ele.id);}}>UPDATE</DeleBtn>
           
-                     <DeleBtn style={{display:this.state.BtnShow === 1 || this.state.selectID !== ele.id ? "flex":"none" }}onClick={()=>{this.changeDelBtn(3); this.changeSelectID(ele.id);}}>DELETE</DeleBtn>
-                     <DeleOptionBtn style={{display:this.state.BtnShow === 3 && this.state.selectID === ele.id  ? "flex":"none" }} onClick={()=>{this.deleteMenu(ele.id)}} >CONFIRM</DeleOptionBtn>
-                     <DeleOptionBtn  style={{display:(this.state.BtnShow === 3 ) && this.state.selectID === ele.id ? "flex":"none" }}onClick={()=>this.changeDelBtn(1)}>CANCEL</DeleOptionBtn>
+                     <DeleBtn  style={{display:this.state.BtnShow === 1 || this.state.selectID !== ele.id ? "flex":"none" }}
+                            onClick={()=>{this.changeDelBtn(3); this.changeSelectID(ele.id);}}>DELETE</DeleBtn>
+                     <DeleBtn className="con" style={{display:this.state.BtnShow === 3 && this.state.selectID === ele.id  ? "flex":"none" }} onClick={()=>{this.deleteMenu(ele.id)}} 
+                                >CONFIRM</DeleBtn>
+                     <DeleBtn   style={{display:(this.state.BtnShow === 3 ) && this.state.selectID === ele.id ? "flex":"none" }}onClick={()=>this.changeDelBtn(1)}>CANCEL</DeleBtn>
                  
                     </BtnArea>
                      </DataBtnWarper>
-                   
                     </LiLine>
                  <LiLine key={ele.description}>
-                 <form  style={{display:this.state.BtnShow === 2 && this.state.selectID === ele.id ? "flex":"none" }} onSubmit={(e:any)=>{ this.patchMenuForm(e);}} >
-              
-              <input type='text' name='description' id='description'  defaultValue={ele.description}></input>
-              <label htmlFor='price2' style={{display: key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "":"none"}} >price2:</label>
-              <input  type='text' name="price2" id='price2'  defaultValue={ele.price2}
-               style={{display: key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "":"none"}}></input>
-             <label htmlFor="price">price:</label> 
-              <input  type='text' name='price' id='price' defaultValue={ele.price}></input>
+                 <Form  style={{display:this.state.BtnShow === 2 && this.state.selectID === ele.id ? "flex":"none" }} onSubmit={(e:any)=>{ this.patchMenuForm(e);}} >
+              <Textarea name='description' id='description'  defaultValue={ele.description}></Textarea>
+              <Label htmlFor='price2' style={{display: key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "":"none"}} >price2:</Label>
+              <Input  type='text' name="price2" id='price2'  defaultValue={ele.price2}
+               style={{display: key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "":"none"}}></Input>
+             <Label htmlFor="price">price:</Label> 
+              <Input  type='text' name='price' id='price' defaultValue={ele.price}></Input>
               <input type='text' name="id" id='id' style={{display:'none'}} defaultValue={ele.id}></input>
-               <input type='submit' onClick={()=>this.changeDelBtn(1)} value='SUBMIT'></input>
-               <DeleOptionBtn  style={{display:(this.state.BtnShow === 3 || this.state.BtnShow === 2) && this.state.selectID === ele.id ? "flex":"none" }}onClick={()=>this.changeDelBtn(1)}>CANCEL</DeleOptionBtn>
-             </form> 
-   
+               <InputBtn type='submit' onClick={()=>this.changeDelBtn(1)} value='SUBMIT'></InputBtn>
+               <BackBtn  style={{display:(this.state.BtnShow === 3 || this.state.BtnShow === 2) && this.state.selectID === ele.id ? "flex":"none" }}onClick={()=>this.changeDelBtn(1)}>
+                        CANCEL</BackBtn>
+             </Form> 
                  </LiLine>
                      </div> 
                       
