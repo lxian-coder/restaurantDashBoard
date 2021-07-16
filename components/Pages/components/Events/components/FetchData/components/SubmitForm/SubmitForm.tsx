@@ -120,9 +120,9 @@ class SubmitForm extends React.Component<Props,State>{
       return  <ChangeArea >
       <Form onSubmit={(e:any)=>this.updateEvent(e)}>
          <Label htmlFor="title" >TITLE:</Label>
-         <Textarea wrap ="hard" name="title" defaultValue={this.props.eventData.title}></Textarea>
+         <Textarea  name="title" defaultValue={this.props.eventData.title}></Textarea>
          <Label htmlFor="description">DESCRIPTION:</Label>
-         <Textarea className="des" wrap="hard" name="description"defaultValue={this.props.eventData.description}></Textarea>
+         <Textarea className="des"  name="description"defaultValue={this.props.eventData.description}></Textarea>
          <input type='text' name="id" value={this.props.ID} style={{display:"none"}}></input>
          <InputBtn type='submit' value='SUBMIT' ></InputBtn>
          <BackBtn onClick={()=>this.props.hideForm()} >BACK</BackBtn>

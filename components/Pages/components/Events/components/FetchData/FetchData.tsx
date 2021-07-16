@@ -40,6 +40,7 @@ const Text = styled.pre`
   font-size: 22px;
   @media only screen and (max-width:700px){
       font-size: 16px;
+    
      }
 `;
 
@@ -79,7 +80,6 @@ interface State {
             description:string,
         },
         showNumber:number,
-
 }
 
 class FetchData extends React.Component<Props,State>{
@@ -95,7 +95,6 @@ class FetchData extends React.Component<Props,State>{
        }
       this.getEvent = this.getEvent.bind(this);
       this.showForm = this.showForm.bind(this);
-     
    }
 
    async getEvent(){

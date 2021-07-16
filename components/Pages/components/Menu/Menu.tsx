@@ -204,6 +204,7 @@ interface State{
   selectID:number,
   category:string,
   success:boolean,
+  successNote:string,
 }
 let a = new FormData();
  class Menu extends React.Component<any,State>{
@@ -213,6 +214,7 @@ let a = new FormData();
       selectID:null,
       category:'',
       success:false,
+      successNote:'',
     }
 
    constructor(props:any){
@@ -269,7 +271,7 @@ let a = new FormData();
      console.log(res);
      this.getMenus();
      this.changeDelBtn(1);
-    // this.setState({category:''})
+     this.setState({category:''})
      this.successNotion(true);
 
    },(error)=>
@@ -320,7 +322,6 @@ successNotion(flag:boolean){
 componentDidMount(){
  this.getMenus();
  
-  
 }
    render(){
     return <PageContainer>
@@ -341,8 +342,11 @@ componentDidMount(){
                    </BottleGlassWarper>
                    </CategoryBottleWarper>
                    <LiLine>
-                      <DeleBtn className="add" style={{display:this.state.category === key ? "none":'' }} onClick={()=>this.setState({category:key})}>ADD NEW</DeleBtn>
-                      <SuccessNote style={{display:this.state.success && this.state.category ===key ? "":'none' }}>Successfully Added!</SuccessNote>
+                      <DeleBtn className="add" style={{display:this.state.category === key ? "none":'' }} onClick={()=>{
+                        this.setState({category:key});
+                        this.setState({successNote:''})
+                        this.setState({success:false})}}>ADD NEW</DeleBtn>
+                      <SuccessNote style={{display:this.state.success && this.state.successNote === key ? "":'none' }}>New Record Successfully Added!</SuccessNote>
                    </LiLine>
                    <LiLine style={{display:this.state.category === key ? "":'none'}}>
                          <Form  onSubmit={(e:any)=>this.submitNewMenuForm(e)} >
@@ -353,7 +357,7 @@ componentDidMount(){
                             <Label htmlFor='price2' style={{display:key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "":"none"}}>price2/one glass:</Label>
                             <Input className="price" onClick={()=>this.successNotion(false)}  name="price2" id='price21' style={{display:key==="Sparkling & Rose Wine" || key === "White Wine" || key === "Red Wine" ? "":"none"}}></Input>
                             <input type='text' name="category" id='category' style={{display:'none'}} defaultValue={value}></input>
-                             <InputBtn type='submit' value='ADD'  ></InputBtn>
+                             <InputBtn type='submit' value='ADD' onClick={()=>this.setState({successNote:key})} ></InputBtn>
                              <BackBtn  onClick={(e)=>{
                                 e.preventDefault();
                                this.successNotion(false);
@@ -411,7 +415,6 @@ componentDidMount(){
 </MenuContainer>
 </PageContainer>;
 }
-
 }
 
 export default Menu;
