@@ -4,7 +4,7 @@ import CSSCONST from '../../../../../../../../cssConst';
 import axios from 'axios';
 import {Line} from '../../../../../utils/Tools';
 import { data } from 'autoprefixer';
-const URL = 'https://test.sealiferestaurantbicheno.com/';
+
 const GREEN =" rgb(4, 170, 109)";
 
 
@@ -103,7 +103,7 @@ class SubmitForm extends React.Component<Props,State>{
         console.log(fd.get("id"));
            await axios({
                method:"patch",
-               url:URL+"event/"+1,
+               url:CSSCONST.BACK_URL+"event/"+1,
                data: body,
            }).then(
                (res)=>{

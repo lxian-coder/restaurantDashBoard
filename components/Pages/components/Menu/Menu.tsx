@@ -7,16 +7,11 @@ import {Side2Warper} from '../SIde2/Side2';
 import {Line,ImgContainer,PageContainer,Iframe} from '../utils/Tools';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-
-
 import bottle from '../../../../assets/bottle.jpg';
 import glass from '../../../../assets/glass.jpg';
 import {CATEGORY} from '../../../../Category';
 import MenuBar from './components/MenuBar';
-import { findDOMNode, render } from 'react-dom';
-import { electron } from 'webpack';
-import Button from '../../../Header/components/NavBar/components/Button/Button';
-const URL ='https://test.sealiferestaurantbicheno.com/';
+
 //const GREEN =" #c7edcc";
 const GREEN =" rgb(4, 170, 109)";
 interface Props2{
@@ -238,7 +233,7 @@ let a = new FormData();
   }
   
   async getMenus(){
-        const data = await axios.get(URL +'menu').then(res=>{
+        const data = await axios.get(CSSCONST.BACK_URL +'menu').then(res=>{
           res.data.sort(sortID)
           this.setState({menus:res.data})
           console.log(res);
@@ -264,7 +259,7 @@ let a = new FormData();
    
   await axios({
      method:'post',
-     url:URL+'menu',
+     url:CSSCONST.BACK_URL+'menu',
      data:body,
    })
    .then((res)=>{
@@ -288,7 +283,7 @@ let a = new FormData();
    };
   await axios({
      method:'patch',
-     url:URL+'menu' + '/' + fd.get("id"),
+     url:CSSCONST.BACK_URL+'menu' + '/' + fd.get("id"),
      data:body,
    })
    .then((res)=>{
@@ -302,7 +297,7 @@ let a = new FormData();
  async deleteMenu(id:number){
   const newMenu = await axios({
     method:'delete',
-    url:URL+'menu' + "/"+ id,
+    url:CSSCONST.BACK_URL+'menu' + "/"+ id,
   })
   .then((res)=>{
     console.log(res);

@@ -5,7 +5,7 @@ import axios from 'axios';
 import {Line} from '../../../utils/Tools';
 import { data } from 'autoprefixer';
 import SubmitForm from './components/SubmitForm/SubmitForm';
-const URL = 'https://test.sealiferestaurantbicheno.com/';
+
 const GREEN =" rgb(4, 170, 109)";
 
 const FetchWarper = styled.div`
@@ -98,7 +98,7 @@ class FetchData extends React.Component<Props,State>{
    }
 
    async getEvent(){
-       let data = await axios.get(URL+'event/1').then(({data})=>data);
+       let data = await axios.get(CSSCONST.BACK_URL+'event/1').then(({data})=>data);
        return data;
 }
  showForm(num:number){
