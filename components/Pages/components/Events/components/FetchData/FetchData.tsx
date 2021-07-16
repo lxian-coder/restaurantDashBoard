@@ -139,7 +139,7 @@ render(){
              <Title>{this.state.stateData.title}</Title>
              <Text>{this.state.stateData.description}</Text> 
            </FetchWarper>
-}
+ }
 }
 
 

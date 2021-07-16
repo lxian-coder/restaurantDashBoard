@@ -47,33 +47,9 @@ const Text = styled.div`
      }
 `;
 
-const TitleDelete = styled.div`
-     font-size: 36px;
-     padding-bottom: 30px;
-     font-family: ${CSSCONST.FONT_ALATA};
-     @media only screen and (max-width:700px){
-      font-size: 26px;
-      margin-left: 5%;
-      margin-right: 5%;
-     }
-`;
-
-const TextDelete = styled.div`
-  font-size: 22px;
-  font-family: ${CSSCONST.FONT_ALATA};
-  text-align: justify;
-  @media only screen and (max-width:700px){
-      font-size: 16px;
-      margin-left: 5%;
-      margin-right: 5%;
-  
-     }
-`;
 interface Props{
-
 }
 interface State{
-  
 }
 class Events extends React.Component<Props,State>{
 
@@ -91,8 +67,6 @@ class Events extends React.Component<Props,State>{
           </Side1Warper>
          <Side2Warper>
               <FetchData ></FetchData>
-             
-          
 
              <Line></Line>
               <TextTile>Group dining and Functions</TextTile>

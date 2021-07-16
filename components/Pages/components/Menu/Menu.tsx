@@ -342,7 +342,7 @@ componentDidMount(){
                    </CategoryBottleWarper>
                    <LiLine>
                       <DeleBtn className="add" style={{display:this.state.category === key ? "none":'' }} onClick={()=>this.setState({category:key})}>ADD NEW</DeleBtn>
-                      <SuccessNote style={{display:this.state.success ? "":'none' }}>Successfully Added!</SuccessNote>
+                      <SuccessNote style={{display:this.state.success && this.state.category ===key ? "":'none' }}>Successfully Added!</SuccessNote>
                    </LiLine>
                    <LiLine style={{display:this.state.category === key ? "":'none'}}>
                          <Form  onSubmit={(e:any)=>this.submitNewMenuForm(e)} >

@@ -20,7 +20,7 @@ class App extends React.Component<Props,State> {
        super(props);
        this.state = {
           dropMenu:false,
-          currentPage:PAGE.UPCOMMING,
+          currentPage:PAGE.MENUS,
        };
 
        this.toggleDropMenu = this.toggleDropMenu.bind(this);

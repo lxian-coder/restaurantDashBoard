@@ -11,5 +11,5 @@ export const Side2Warper = styled.aside`
          @media only screen and (max-width:961px){
          width: 100%;
       }
-
+     z-index: 2;
 `;

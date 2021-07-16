@@ -40,6 +40,7 @@ class Pages extends React.Component<Props,State>{
      super(props);
      this.changePageWithURL = this.changePageWithURL.bind(this);
    }
+   // 让page change with URL
   changePageWithURL(){
     let URL = this.props.history.location.pathname;
     this.props.changePage(map.get(URL));
@@ -47,7 +48,7 @@ class Pages extends React.Component<Props,State>{
   }
   componentDidMount(){
     // fix the route problem
-    // this.changePageWithURL();
+     this.changePageWithURL();
     UNLISTEN = this.props.history.listen(route =>{
       this.changePageWithURL();
     })
