@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React  from 'react';
 import styled,{css} from 'styled-components';
 import CSSCONST from '../../../../../../../../cssConst';
 import axios from 'axios';
