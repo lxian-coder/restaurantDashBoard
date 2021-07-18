@@ -5,7 +5,7 @@ import CSSCONST from '../../../../../../../cssConst';
 import styled, { css } from "styled-components";
 
 const DeleBtn = styled.button`
-	width: 80px;
+	width: 48.5%;
 	font-size: 12px;
 	display: flex;
 	justify-content: center;
@@ -14,7 +14,7 @@ const DeleBtn = styled.button`
 	font-weight: 600;
 	color: white;
 	background-color: ${GREEN};
-    margin-right: 3px;
+    
 
 	&.con {
 		background-color: orangered;
@@ -22,7 +22,9 @@ const DeleBtn = styled.button`
 `;
 const BtnArea = styled.div`
 	display: flex;
-   
+    justify-content: space-between;
+    width: 20%;
+
 `;
 interface Props {
 changeSelectID:(num:number)=>void,
