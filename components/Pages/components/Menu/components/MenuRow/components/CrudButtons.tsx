@@ -11,19 +11,18 @@ const DeleBtn = styled.button`
 	justify-content: center;
 	align-items: center;
 	border-radius: 8px;
-	margin-left: 5px;
 	font-weight: 600;
 	color: white;
 	background-color: ${GREEN};
-	&.add {
-		height: 45px;
-	}
+    margin-right: 3px;
+
 	&.con {
 		background-color: orangered;
 	}
 `;
 const BtnArea = styled.div`
 	display: flex;
+   
 `;
 interface Props {
 changeSelectID:(num:number)=>void,
@@ -58,7 +57,8 @@ class CrudButtons extends Component<Props> {
   render(){
       const {btnShow, selectID,changeDelBtn,changeSelectID,ele} = this.props;
       return <BtnArea>
-      <DeleBtn
+       
+          <DeleBtn
           style={{
               display:
                   btnShow === 1 ||
@@ -94,11 +94,11 @@ class CrudButtons extends Component<Props> {
       <DeleBtn
           className="con"
           style={{
-              visibility:
+              display:
                   btnShow === 3 &&
                   selectID === ele.id
-                      ? "visible"
-                      : "hidden",
+                      ? ""
+                      : "none",
           }}
           onClick={() => {
               this.deleteMenu(ele.id);
@@ -108,16 +108,18 @@ class CrudButtons extends Component<Props> {
       </DeleBtn>
       <DeleBtn
           style={{
-              visibility:
+              display:
                btnShow === 3 &&
                  selectID === ele.id
-                      ? "visible"
-                      : "hidden",
+                      ? ""
+                      : "none",
           }}
           onClick={() => changeDelBtn(1)}
       >
           CANCEL
       </DeleBtn>
+        
+      
   </BtnArea>
 
 }

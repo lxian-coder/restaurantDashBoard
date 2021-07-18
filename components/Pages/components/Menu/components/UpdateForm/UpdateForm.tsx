@@ -15,7 +15,8 @@ const LiLine = styled.li`
 	display: flex;
 	justify-content: space-between;
 	font-size: 18px;
-	padding-bottom: 9px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 `;
 interface Props {
   ele: {
@@ -26,7 +27,7 @@ interface Props {
   };
   BtnShow: number;
   selectID: number;
-  key: string;
+  keyy: string;
   changeDelBtn: () => void;
   getMenus: () => void;
 }
@@ -57,13 +58,14 @@ class UpdateForm extends React.Component<Props, State> {
   }
 
   render() {
-    const { ele, BtnShow, selectID, key, changeDelBtn } = this.props;
-    return (	<LiLine key={ele.description}>
+    const { ele, BtnShow, selectID, keyy, changeDelBtn } = this.props;
+  
+    return (	<LiLine key={ele.description} style={{
+        display: BtnShow === 2 && selectID === ele.id ? "flex" : "none",
+      }}>
 
    <Form
-        style={{
-          display: BtnShow === 2 && selectID === ele.id ? "flex" : "none",
-        }}
+        
         onSubmit={(e: any) => {
           this.patchMenuForm(e);
         }}
@@ -77,9 +79,9 @@ class UpdateForm extends React.Component<Props, State> {
           htmlFor="price2"
           style={{
             display:
-              key === "Sparkling & Rose Wine" ||
-              key === "White Wine" ||
-              key === "Red Wine"
+              keyy === "Sparkling & Rose Wine" ||
+              keyy === "White Wine" ||
+              keyy === "Red Wine"
                 ? ""
                 : "none",
           }}
@@ -93,9 +95,9 @@ class UpdateForm extends React.Component<Props, State> {
           defaultValue={ele.price2}
           style={{
             display:
-              key === "Sparkling & Rose Wine" ||
-              key === "White Wine" ||
-              key === "Red Wine"
+              keyy === "Sparkling & Rose Wine" ||
+              keyy === "White Wine" ||
+              keyy === "Red Wine"
                 ? ""
                 : "none",
           }}

@@ -9,7 +9,6 @@ import CrudButtons from './components/CrudButtons';
 const PriceWarper = styled.div`
 	display: flex;
 	justify-content: space-between;
-	width: 10%;
 	min-width: 5.125rem;
 	margin-left: 13%;
 `;
@@ -19,6 +18,7 @@ const DataArea = styled.div`
 	display: flex;
 	justify-content: space-between;
 	width: 80%;
+    padding-right: 12px;
 `;
 const DataBtnWarper = styled.div`
 	display: flex;
@@ -42,21 +42,23 @@ interface Props {
 const LiLine = styled.li`
 	display: flex;
 	justify-content: space-between;
+    align-items: center;
 	font-size: 18px;
-	padding-bottom: 9px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 `;
 class MenuRow extends Component<Props> {
+    
   constructor(props:Props){
       super(props);
-
   }
+
 render(){
     const {btnShow, selectID,changeDelBtn,changeSelectID,ele,getMenus} = this.props;
     return  	<LiLine key={ele.id}>
-        <DataBtnWarper>
+    <DataBtnWarper>
             <DataArea>
         <div>{ele.description}</div>
-
         <PriceWarper>
             <Price2Warper>
                 {ele.price2 === "" ? "" : "$"}
@@ -81,12 +83,13 @@ render(){
             </Price1Warper>
         </PriceWarper>
     </DataArea>
-      <CrudButtons selectID={selectID} ele={ele} 
-btnShow={btnShow} 
-changeDelBtn={(num:number)=>changeDelBtn(num)}
-getMenus={getMenus}
-changeSelectID = {(num:number)=>changeSelectID(num)}></CrudButtons>
-</DataBtnWarper>
+    <CrudButtons selectID={selectID} ele={ele} 
+        btnShow={btnShow} 
+        changeDelBtn={(num:number)=>changeDelBtn(num)}
+        getMenus={getMenus}
+        changeSelectID = {(num:number)=>changeSelectID(num)}>
+    </CrudButtons>
+   </DataBtnWarper>
 
     </LiLine> 
  

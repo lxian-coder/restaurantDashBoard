@@ -33,6 +33,8 @@ const map = new Map();
 
 map.set('/MENUS',PAGE.MENUS);
 map.set('/UPCOMING EVENTS',PAGE.UPCOMMING);
+map.set('/',PAGE.MENUS);
+
 
 class Pages extends React.Component<Props,State>{
 

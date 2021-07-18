@@ -2,7 +2,6 @@ import React from "react";
 import styled, { css } from "styled-components";
 import CSSCONST from "../../../../cssConst";
 import { Side2Warper } from "../SIde2/Side2";
-
 import { Line, ImgContainer, PageContainer, Iframe } from "../utils/Tools";
 import axios from "axios";
 import bottle from "../../../../assets/bottle.jpg";
@@ -12,6 +11,7 @@ import MenuBar from "./components/MenuBar/MenuBar";
 import UpdateForm from "./components/UpdateForm/UpdateForm";
 import AddForm from "./components/AddForm/AddForm";
 import MenuRow from "./components/MenuRow/MenuRow";
+import {DragDropContext,Droppable,DropResult,Draggable} from 'react-beautiful-dnd';
 
 const GREEN = " rgb(4, 170, 109)";
 interface Props2 {
@@ -40,7 +40,8 @@ const LiLine = styled.li`
 	display: flex;
 	justify-content: space-between;
 	font-size: 18px;
-	padding-bottom: 9px;
+	padding-bottom: 5px;
+  padding-top: 5px;
 `;
 const MenuSide2Warper = styled.div`
 	position: relative;
@@ -78,7 +79,6 @@ const DeleBtn = styled.button`
 	justify-content: center;
 	align-items: center;
 	border-radius: 8px;
-	margin-left: 5px;
 	font-weight: 600;
 	color: white;
 	background-color: ${GREEN};
@@ -106,7 +106,16 @@ interface State {
 	success: boolean;
 	successNote: string;
 }
-let a = new FormData();
+
+
+const getItemStyle = (isDragging:boolean,draggableStyle:any) =>({
+  background: isDragging ? "#4a2975" :"white",
+  color: isDragging ? 'white' : 'black',
+  borderRadius: "5px",
+  width:'100%',
+
+  ...draggableStyle
+})
 class Menu extends React.Component<any, State> {
 	state: Readonly<State> = {
 		menus: [],
@@ -154,7 +163,18 @@ class Menu extends React.Component<any, State> {
 			success: flag,
 		});
 	}
+ onDragEnd=(result:DropResult)=>{
+    const {source,destination} = result;
+    if(!destination) return;
 
+    const items = Array.from(this.state.menus);
+    const[newOrder] =  items.splice(source.index,1);
+    items.splice(destination.index,0,newOrder);
+
+    this.setState({
+      menus:items,
+    })
+ };
 	componentDidMount() {
 		this.getMenus();
 	}
@@ -166,6 +186,7 @@ class Menu extends React.Component<any, State> {
 					<Side2Warper>
 						<MenuSide2Warper>
 							{CATEGORY.map(({ key, value }) => {
+                {console.log("primit Key:"+key)}
 								return (
 									<UL>
 										<SpaceAdd
@@ -226,18 +247,30 @@ class Menu extends React.Component<any, State> {
 										>
 											<AddForm
 												getMenus={() => this.getMenus()}
-												successNotion={() => this.successNotion(false)}
-												key={key}
+												successNotion={(flag) => this.successNotion(flag)}
+												keyy = {key}
+        
 												value={value}
 												changeDelBtn={() => this.changeDelBtn(1)}
 												setCategory={() => this.setState({ category: "" })}
+                        setSuccessNote={()=>this.setState({successNote:key})}
 											></AddForm>
 										</LiLine>
-										{this.state.menus.map((ele) => {
+                    <DragDropContext onDragEnd={this.onDragEnd}>
+                     <Droppable droppableId="todo">
+                       {(provided)=>(
+                           <div className="todo" {...provided.droppableProps} ref={provided.innerRef}>
+                                {this.state.menus.map((ele,index) => {
 											if (ele.category === value) {
 												return (
-
-													<div key={ele.id}>
+                          <Draggable key={ele.id} draggableId={String(ele.id)} index={index}>
+                           {(provided,snapshot) => (
+                             <div ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    style={getItemStyle(snapshot.isDragging,provided.draggableProps.style)}
+                             >
+                            <div key={ele.id}>
 														<MenuRow
 															selectID={this.state.selectID}
 															ele={ele}
@@ -255,14 +288,24 @@ class Menu extends React.Component<any, State> {
 															ele={ele}
 															BtnShow={this.state.BtnShow}
 															selectID={this.state.selectID}
-															key={key}
+															keyy={key}
 															changeDelBtn={() => this.changeDelBtn(1)}
 															getMenus={this.getMenus}
 														></UpdateForm>
 													</div>
-												);
-											}
-										})}
+                             </div>
+                           )}
+          
+                          </Draggable>
+                            );
+                            }
+                          })}
+
+                           </div>
+                       )}
+                     </Droppable>
+                    </DragDropContext>
+
 									</UL>
 								);
 							})}

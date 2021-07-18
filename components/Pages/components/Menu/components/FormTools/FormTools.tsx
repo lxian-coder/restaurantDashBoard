@@ -1,4 +1,6 @@
 import styled,{css} from 'styled-components';
+import CSSCONST from '../../../../../../cssConst';
+
 
 export const GREEN =" rgb(4, 170, 109)";
 
@@ -30,10 +32,14 @@ background-color: ${GREEN};
 
 export const Input = styled.input`
        width: 50px;
+       border-radius: 5px;
+       font-family: ${CSSCONST.FONT_ASAR};
 `;
 export const Textarea = styled.textarea`
         width:450px;
         font-size: 16px;
+        border-radius: 5px;
+        font-family: ${CSSCONST.FONT_ASAR};
 `;
 
 export const Label = styled.label`
@@ -43,4 +49,5 @@ export const Label = styled.label`
 export const Form = styled.form`
    display: flex;
    flex-direction: column;
+
 `;
