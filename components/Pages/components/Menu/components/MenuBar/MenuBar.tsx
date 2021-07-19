@@ -1,9 +1,10 @@
 import React from 'react';
-import styled,{css} from 'styled-components';
+import styled,{css, ThemeConsumer} from 'styled-components';
 import CSSCONST from '../../../../../../cssConst';
 import {Side1Warper} from '../../../Side1/Side1';
 import {MEAL} from '../../../../../../MEAL';
 import {Link} from 'react-router-dom';
+import SaveOrder from './components/SaveOrder/SaveOrder';
 
 export const ID = [{
     key:'Breakfast',
@@ -55,6 +56,9 @@ const BookTable = styled.div`
 `;
 
   type Props={
+    orderChanged:boolean,
+    menus:any[],
+    changeMute:()=>void,
    };
   type State={
       currentMeal:string,
@@ -168,11 +172,11 @@ class MenuBar extends React.Component<Props,State>{
                this.scrollToAnchor("Sparkling & Rose Wine");
              }}active={this.state.currentMeal === MEAL.REFRESHMENTS ? "black" : CSSCONST.GREY }>Refreshments</Li>
            </Ul>
+           <SaveOrder changeMute={()=>this.props.changeMute()} menus={this.props.menus} orderChanged={this.props.orderChanged}></SaveOrder>
            </div>
+         
          </Side1Warper>
-       
     }
-  
 }
 
 export default MenuBar;

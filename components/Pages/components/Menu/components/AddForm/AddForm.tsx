@@ -11,7 +11,6 @@ import {
 import axios from "axios";
 
 import CSSCONST from "../../../../../../cssConst";
-
 interface Props {
 	getMenus: () => void;
 	changeDelBtn: () => void;
@@ -20,6 +19,7 @@ interface Props {
 	keyy: string;
 	value: string;
 	setSuccessNote: () => void;
+    menus:Array<any>;
 }
 
 class AddForm extends Component<Props> {
@@ -37,6 +37,7 @@ class AddForm extends Component<Props> {
 			price: fd.get("price"),
 			price2: fd.get("price2"),
 			category: fd.get("category"),
+            index: this.props.menus.length,
 		};
 
 		await axios({

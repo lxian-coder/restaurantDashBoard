@@ -71,7 +71,6 @@ class CrudButtons extends Component<Props> {
           onClick={() => {
                changeDelBtn(2);
                changeSelectID(ele.id);
-           
           }}
       >
           UPDATE

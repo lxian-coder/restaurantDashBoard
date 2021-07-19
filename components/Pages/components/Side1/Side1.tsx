@@ -8,7 +8,7 @@ export const Side1Warper = styled.aside`
           font-family: ${CSSCONST.FONT_RAKKAS};
           font-size: 48px;
           width: 29%;
-
+       
           display: flex;
           justify-content: flex-start;
         

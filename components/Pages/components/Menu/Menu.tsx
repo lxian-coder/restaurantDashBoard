@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled, { css, ThemeConsumer } from "styled-components";
 import CSSCONST from "../../../../cssConst";
 import { Side2Warper } from "../SIde2/Side2";
 import { Line, ImgContainer, PageContainer, Iframe } from "../utils/Tools";
@@ -12,6 +12,7 @@ import UpdateForm from "./components/UpdateForm/UpdateForm";
 import AddForm from "./components/AddForm/AddForm";
 import MenuRow from "./components/MenuRow/MenuRow";
 import {DragDropContext,Droppable,DropResult,Draggable} from 'react-beautiful-dnd';
+import Item from "../../../Header/components/NavBar/components/Item/Item";
 
 const GREEN = " rgb(4, 170, 109)";
 interface Props2 {
@@ -96,6 +97,7 @@ interface menuData {
 	description: string;
 	price: string;
 	price2: string;
+  index:number
 }
 
 interface State {
@@ -105,8 +107,8 @@ interface State {
 	category: string;
 	success: boolean;
 	successNote: string;
+	orderChanged:boolean;
 }
-
 
 const getItemStyle = (isDragging:boolean,draggableStyle:any) =>({
   background: isDragging ? "#4a2975" :"white",
@@ -124,6 +126,7 @@ class Menu extends React.Component<any, State> {
 		category: "",
 		success: false,
 		successNote: "",
+		orderChanged:false,
 	};
 
 	constructor(props: any) {
@@ -132,6 +135,7 @@ class Menu extends React.Component<any, State> {
 		this.changeDelBtn = this.changeDelBtn.bind(this);
 		this.changeSelectID = this.changeSelectID.bind(this);
 		this.successNotion = this.successNotion.bind(this);
+    this.processTheNewOrder = this.processTheNewOrder.bind(this);
 	}
 	changeDelBtn(num: number) {
 		this.setState({
@@ -146,14 +150,16 @@ class Menu extends React.Component<any, State> {
 
 	async getMenus() {
 		const data = await axios.get(CSSCONST.BACK_URL + "menu").then((res) => {
-			res.data.sort(sortID);
+      const d = res.data;
+			res.data.sort(sortIndex);
 			this.setState({ menus: res.data });
-			console.log(res);
+			console.log(res.data);
 		});
 
+
 		// 排序
-		function sortID(a: menuData, b: menuData) {
-			return a.id - b.id;
+		function sortIndex(a: menuData, b: menuData) {
+			return a.index - b.index;
 		}
 		console.log(this.state.menus);
 	}
@@ -163,6 +169,15 @@ class Menu extends React.Component<any, State> {
 			success: flag,
 		});
 	}
+
+
+
+  processTheNewOrder(){
+    this.state.menus.map((ele,index)=>{
+
+    })
+  }
+
  onDragEnd=(result:DropResult)=>{
     const {source,destination} = result;
     if(!destination) return;
@@ -170,23 +185,31 @@ class Menu extends React.Component<any, State> {
     const items = Array.from(this.state.menus);
     const[newOrder] =  items.splice(source.index,1);
     items.splice(destination.index,0,newOrder);
-
+    if(source.index != destination.index) this.setState({orderChanged:true})
     this.setState({
       menus:items,
     })
  };
 	componentDidMount() {
 		this.getMenus();
+
 	}
+  componentDidUpdate(){
+    this.processTheNewOrder();
+  }
 	render() {
 		return (
 			<PageContainer>
 				<MenuContainer>
-					<MenuBar></MenuBar>
+					<MenuBar 
+					menus={this.state.menus} 
+					orderChanged={this.state.orderChanged}
+					changeMute = {()=>this.setState({orderChanged:false})}
+					></MenuBar>
 					<Side2Warper>
 						<MenuSide2Warper>
 							{CATEGORY.map(({ key, value }) => {
-                {console.log("primit Key:"+key)}
+             
 								return (
 									<UL>
 										<SpaceAdd
@@ -249,7 +272,7 @@ class Menu extends React.Component<any, State> {
 												getMenus={() => this.getMenus()}
 												successNotion={(flag) => this.successNotion(flag)}
 												keyy = {key}
-        
+                        menus ={this.state.menus}
 												value={value}
 												changeDelBtn={() => this.changeDelBtn(1)}
 												setCategory={() => this.setState({ category: "" })}
@@ -261,10 +284,13 @@ class Menu extends React.Component<any, State> {
                        {(provided)=>(
                            <div className="todo" {...provided.droppableProps} ref={provided.innerRef}>
                                 {this.state.menus.map((ele,index) => {
+
 											if (ele.category === value) {
+
 												return (
                           <Draggable key={ele.id} draggableId={String(ele.id)} index={index}>
                            {(provided,snapshot) => (
+
                              <div ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
@@ -295,7 +321,6 @@ class Menu extends React.Component<any, State> {
 													</div>
                              </div>
                            )}
-          
                           </Draggable>
                             );
                             }
