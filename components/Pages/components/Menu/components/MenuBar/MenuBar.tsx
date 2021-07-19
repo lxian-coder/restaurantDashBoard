@@ -47,18 +47,13 @@ const Li = styled.li<Props2>`
     padding-bottom:10px;
 `;
 
-const BookTable = styled.div`
-   font-size: 28px;
-   font-family: ${CSSCONST.FONT_ALATA};
-   font-weight: 700;
-   padding-top: 25px;
-   z-index: 1;
-`;
 
   type Props={
     orderChanged:boolean,
     menus:any[],
     changeMute:()=>void,
+    turnOnOrderNotion:()=>void,
+    showOrderSuccessNotion:boolean;
    };
   type State={
       currentMeal:string,
@@ -172,7 +167,10 @@ class MenuBar extends React.Component<Props,State>{
                this.scrollToAnchor("Sparkling & Rose Wine");
              }}active={this.state.currentMeal === MEAL.REFRESHMENTS ? "black" : CSSCONST.GREY }>Refreshments</Li>
            </Ul>
-           <SaveOrder changeMute={()=>this.props.changeMute()} menus={this.props.menus} orderChanged={this.props.orderChanged}></SaveOrder>
+           <SaveOrder
+           turnOnOrderNotion = {()=>this.props.turnOnOrderNotion()}
+           showOrderSuccessNotion ={this.props.showOrderSuccessNotion}
+           changeMute={()=>this.props.changeMute()} menus={this.props.menus} orderChanged={this.props.orderChanged}></SaveOrder>
            </div>
          
          </Side1Warper>

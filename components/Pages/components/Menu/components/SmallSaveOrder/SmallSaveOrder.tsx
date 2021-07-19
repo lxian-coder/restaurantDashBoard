@@ -1,17 +1,17 @@
 import React,{Component} from 'react';
-import { InputBtn,BackBtn,Input,Label,Textarea,Form,GREEN } from '../../../FormTools/FormTools';
 import axios from 'axios';
-import CSSCONST from '../../../../../../../../cssConst';
 import styled, { css } from "styled-components";
-
-
+import CSSCONST from '../../../../../../cssConst';
 const SaveContainer = styled.div`
       display: flex;
       flex-direction: column;
 	  text-align: justify;
-      width:min(70%,220px);
       justify-content: center;
-      font-size: 18px;
+      font-size: 25px;
+      padding-bottom:6%;
+      @media only screen and (min-width: 962px){
+           display: none;
+      }
 `;
 const Text = styled.p`
   
@@ -19,6 +19,9 @@ const Text = styled.p`
      color: ${CSSCONST.PURPLE};
      font-family: ${CSSCONST.FONT_ALATA};
 	 width: 100%;
+     &.success{
+        padding-top: 2%;
+     }
 `;
 
 const Btn = styled.button`
@@ -50,15 +53,15 @@ changeMute:()=>void,
 showOrderSuccessNotion:boolean;
 turnOnOrderNotion:()=>void,
 }
-interface State{
+
+
+interface State {
 
 }
 
-class SaveOrder extends Component<Props,State>{
-
+class SmallSaveOrder extends Component<Props,State> {
     constructor(props:Props){
         super(props)
-      
         this.processNewOrderMenu = this.processNewOrderMenu.bind(this);
         this.patchMenuIndex = this.patchMenuIndex.bind(this);
     }
@@ -92,16 +95,15 @@ class SaveOrder extends Component<Props,State>{
           );
         }
 
-render(){
-    return <SaveContainer>
-		    <Text style={{display:this.props.orderChanged ? 'none':''}}>You can drag to change the menu order.</Text> 
-            <Text style={{display:this.props.orderChanged  ? '':'none', whiteSpace:'nowrap'}}>Order Changed!</Text>
-            <Text style={{display: !this.props.orderChanged && this.props.showOrderSuccessNotion ? '':'none', whiteSpace:'nowrap'}}>Successfully Saved!</Text>
-            <Btn style={{display:this.props.orderChanged  ? '':'none'}} onClick={()=>{this.processNewOrderMenu(); this.props.changeMute()}}>SAVE</Btn>
-        </SaveContainer>
+    render(){
+        return <SaveContainer>
+        <Text style={{display:this.props.orderChanged ? 'none':''}}>You can drag to change the menu order.</Text> 
+        <Text style={{display:this.props.orderChanged  ? '':'none', whiteSpace:'nowrap'}}>Order Has Been Changed!</Text>
+        <Text className='success' style={{display: !this.props.orderChanged && this.props.showOrderSuccessNotion ? '':'none', whiteSpace:'nowrap'}}>Saved Successfully!</Text>
+        <Btn style={{display:this.props.orderChanged  ? '':'none'}} onClick={()=>{this.processNewOrderMenu(); this.props.changeMute()}}>SAVE</Btn>
+    </SaveContainer>
 }
+    }
 
 
-}
-
-export default SaveOrder;
+export default SmallSaveOrder;

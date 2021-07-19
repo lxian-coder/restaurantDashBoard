@@ -13,6 +13,8 @@ import AddForm from "./components/AddForm/AddForm";
 import MenuRow from "./components/MenuRow/MenuRow";
 import {DragDropContext,Droppable,DropResult,Draggable} from 'react-beautiful-dnd';
 import Item from "../../../Header/components/NavBar/components/Item/Item";
+import SmallSaveOrder from "./components/SmallSaveOrder/SmallSaveOrder";
+
 
 const GREEN = " rgb(4, 170, 109)";
 interface Props2 {
@@ -90,7 +92,6 @@ const DeleBtn = styled.button`
 		background-color: orangered;
 	}
 `;
-
 interface menuData {
 	id: number;
 	category: string;
@@ -108,6 +109,7 @@ interface State {
 	success: boolean;
 	successNote: string;
 	orderChanged:boolean;
+	showOrderSuccessNotion:boolean;
 }
 
 const getItemStyle = (isDragging:boolean,draggableStyle:any) =>({
@@ -127,9 +129,10 @@ class Menu extends React.Component<any, State> {
 		success: false,
 		successNote: "",
 		orderChanged:false,
+		showOrderSuccessNotion:false
 	};
 
-	constructor(props: any) {
+	constructor(props: any){
 		super(props);
 		this.getMenus = this.getMenus.bind(this);
 		this.changeDelBtn = this.changeDelBtn.bind(this);
@@ -201,13 +204,25 @@ class Menu extends React.Component<any, State> {
 		return (
 			<PageContainer>
 				<MenuContainer>
+				
 					<MenuBar 
 					menus={this.state.menus} 
 					orderChanged={this.state.orderChanged}
 					changeMute = {()=>this.setState({orderChanged:false})}
+					showOrderSuccessNotion={this.state.showOrderSuccessNotion}
+					turnOnOrderNotion = {()=>this.setState({showOrderSuccessNotion:true})}
 					></MenuBar>
 					<Side2Warper>
 						<MenuSide2Warper>
+						<SmallSaveOrder
+					       menus={this.state.menus} 
+					orderChanged={this.state.orderChanged}
+					changeMute = {()=>this.setState({orderChanged:false})}
+					showOrderSuccessNotion={this.state.showOrderSuccessNotion}
+					turnOnOrderNotion = {()=>this.setState({showOrderSuccessNotion:true})}
+								
+									
+					></SmallSaveOrder>
 							{CATEGORY.map(({ key, value }) => {
              
 								return (
