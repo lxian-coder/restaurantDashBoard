@@ -4,8 +4,7 @@ import CSSCONST from "../../../../cssConst";
 import { Side2Warper } from "../SIde2/Side2";
 import { Line, ImgContainer, PageContainer, Iframe } from "../utils/Tools";
 import axios from "axios";
-import bottle from "../../../../assets/bottle.jpg";
-import glass from "../../../../assets/glass.jpg";
+
 import { CATEGORY } from "../../../../Category";
 import MenuBar from "./components/MenuBar/MenuBar";
 import UpdateForm from "./components/UpdateForm/UpdateForm";
@@ -55,16 +54,6 @@ const CategoryBottleWarper = styled.div`
 	justify-content: space-between;
 `;
 
-const BottleGlassWarper = styled.div<Props2>`
-	display: ${(p) => p.showOrNot};
-	justify-content: space-between;
-	width: 12%;
-	min-width: 5.125rem; ;
-`;
-const BottleWarper = styled.img`
-	max-height: 35px;
-	margin-left: 1.0625rem;
-`;
 const SpaceAdd = styled.div<Props2>`
 	display: ${(p) => p.showOrNot};
 	width: 100%;
@@ -159,7 +148,6 @@ class Menu extends React.Component<any, State> {
 			console.log(res.data);
 		});
 
-
 		// 排序
 		function sortIndex(a: menuData, b: menuData) {
 			return a.index - b.index;
@@ -224,7 +212,6 @@ class Menu extends React.Component<any, State> {
 									
 					></SmallSaveOrder>
 							{CATEGORY.map(({ key, value }) => {
-             
 								return (
 									<UL>
 										<SpaceAdd
@@ -240,18 +227,7 @@ class Menu extends React.Component<any, State> {
 										></SpaceAdd>
 										<CategoryBottleWarper>
 											<Category id={key}>{key}</Category>
-											<BottleGlassWarper
-												showOrNot={
-													key === "Sparkling & Rose Wine" ||
-													key === "White Wine" ||
-													key === "Red Wine"
-														? ""
-														: "none"
-												}
-											>
-												<BottleWarper src={glass}></BottleWarper>
-												<BottleWarper src={bottle}></BottleWarper>
-											</BottleGlassWarper>
+								
 										</CategoryBottleWarper>
 										<LiLine>
 											<DeleBtn

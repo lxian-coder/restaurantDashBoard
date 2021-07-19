@@ -9,8 +9,11 @@ import CrudButtons from './components/CrudButtons';
 const PriceWarper = styled.div`
 	display: flex;
 	justify-content: space-between;
-	min-width: 5.125rem;
+
 	margin-left: 13%;
+    @media only screen and (max-width: 557px){
+          margin-left: 8% ;
+    }
 `;
 const Price1Warper = styled.div``;
 
@@ -19,13 +22,18 @@ const DataArea = styled.div`
 	justify-content: space-between;
 	width: 80%;
     padding-right: 12px;
+    @media only screen and (max-width: 557px){
+          width: 80% ;
+    }
 `;
 const DataBtnWarper = styled.div`
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
 `;
-const Price2Warper = styled.div``;
+const Price2Warper = styled.div`
+ margin-right: 10%;
+`;
 interface Props {
     changeSelectID:(num:number)=>void,
     changeDelBtn:(num:number)=>void,
@@ -46,6 +54,9 @@ const LiLine = styled.li`
 	font-size: 18px;
     padding-top: 5px;
     padding-bottom: 5px;
+    @media only screen and (max-width: 400px){
+     font-size: 13px;
+    }
 `;
 class MenuRow extends Component<Props> {
     

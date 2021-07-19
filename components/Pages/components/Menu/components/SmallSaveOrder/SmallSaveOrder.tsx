@@ -15,7 +15,7 @@ const SaveContainer = styled.div`
 `;
 const Text = styled.p`
   
-      padding-top: 12%;
+      padding-top: 5%;
      color: ${CSSCONST.PURPLE};
      font-family: ${CSSCONST.FONT_ALATA};
 	 width: 100%;

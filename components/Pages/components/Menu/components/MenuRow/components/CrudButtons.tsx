@@ -14,17 +14,22 @@ const DeleBtn = styled.button`
 	font-weight: 600;
 	color: white;
 	background-color: ${GREEN};
-    
 
 	&.con {
 		background-color: orangered;
 	}
+    @media only screen and (max-width: 400px){
+          font-weight: 300;
+          font-size: 8px;
+    }
 `;
 const BtnArea = styled.div`
 	display: flex;
     justify-content: space-between;
     width: 20%;
-
+    @media only screen and (max-width: 557px){
+          width: 30% ;
+    }
 `;
 interface Props {
 changeSelectID:(num:number)=>void,
