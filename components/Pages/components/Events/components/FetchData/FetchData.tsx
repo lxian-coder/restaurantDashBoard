@@ -120,10 +120,10 @@ componentDidMount(){
    });
 }
 componentDidUpdate(){
-    let  data2=  this.getEvent();
-    data2.then(res=>{
-      this.setState({stateData:res});
-     });
+    // let  data2=  this.getEvent();
+    // data2.then(res=>{
+    //   this.setState({stateData:res});
+    //  });
 }
 render(){
     return <FetchWarper>

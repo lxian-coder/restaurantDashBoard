@@ -94,7 +94,7 @@ class SaveOrder extends Component<Props,State>{
 
 render(){
     return <SaveContainer>
-		    <Text style={{display:this.props.orderChanged ? 'none':''}}>You can drag to change the menu order.</Text> 
+		    <Text style={{display:this.props.orderChanged ? 'none':'', fontSize:'20px',fontWeight:800}}>You can drag to change the menu order.</Text> 
             <Text style={{display:this.props.orderChanged  ? '':'none', whiteSpace:'nowrap'}}>Order Changed!</Text>
             <Text style={{display: !this.props.orderChanged && this.props.showOrderSuccessNotion ? '':'none', whiteSpace:'nowrap'}}>Successfully Saved!</Text>
             <Btn style={{display:this.props.orderChanged  ? '':'none'}} onClick={()=>{this.processNewOrderMenu(); this.props.changeMute()}}>SAVE</Btn>
