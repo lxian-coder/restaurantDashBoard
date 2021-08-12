@@ -55,6 +55,7 @@ const BtnWarper = styled.div`
  display: flex;
  justify-content: flex-end;
 `;
+
 const UpdateBtn = styled.button`
 width: 100px;
 font-size:12px;

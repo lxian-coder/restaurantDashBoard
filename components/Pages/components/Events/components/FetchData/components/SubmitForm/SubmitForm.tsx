@@ -105,6 +105,9 @@ class SubmitForm extends React.Component<Props,State>{
                method:"patch",
                url:CSSCONST.BACK_URL+"event/"+1,
                data: body,
+               headers:{
+                Authorization:localStorage.getItem("jwt")
+            }
            }).then(
                (res)=>{
                 console.log(res);

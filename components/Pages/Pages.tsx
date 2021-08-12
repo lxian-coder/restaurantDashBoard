@@ -65,10 +65,10 @@ class Pages extends React.Component<Props,State>{
       <ScrollToTop >
       <Switch>
       <PageWarper>
-        <Route path="/" exact component={Menu}></Route> 
-        <Route path="/MENUS" component={Menu} ></Route>
+         <Route path="/" exact component={Menu}></Route> 
+         <Route path="/MENUS" component={Menu} ></Route>
          <Route path="/UPCOMING EVENTS"  component={EVENTS}></Route>  
-  </PageWarper>
+      </PageWarper>
       </Switch>
       </ScrollToTop>
 );

@@ -6,8 +6,12 @@ import styled,{css} from 'styled-components';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {PAGE} from '../../PAGE';
 import {MEAL} from '../../MEAL';
+import Login from '../Login/Login';
 
-
+const LoginContainer  = styled.div`
+ position: absolute;
+ 
+`;
 type Props={};
 type State={
    dropMenu:boolean;
@@ -45,6 +49,10 @@ class App extends React.Component<Props,State> {
     return  <div>
           <Router >
           <Header dropMenu={dropMenu} toggleDropMenu={this.toggleDropMenu}  currentPage={currentPage}></Header>
+               <LoginContainer>
+                  <Login />
+                  
+               </LoginContainer>
                <Pages changePage={this.changePage}></Pages>
               <Footer />
           </Router>

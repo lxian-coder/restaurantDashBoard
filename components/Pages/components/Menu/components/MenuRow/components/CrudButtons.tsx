@@ -51,6 +51,9 @@ class CrudButtons extends Component<Props> {
     const newMenu = await axios({
         method: "delete",
         url: CSSCONST.BACK_URL + "menu" + "/" + id,
+        headers:{
+            Authorization:localStorage.getItem("jwt")
+        }
     }).then(
         (res) => {
             console.log(res);

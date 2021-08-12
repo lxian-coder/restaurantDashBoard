@@ -44,6 +44,9 @@ class AddForm extends Component<Props> {
 			method: "post",
 			url: CSSCONST.BACK_URL + "menu",
 			data: body,
+			headers:{
+				Authorization:localStorage.getItem("jwt")
+			}
 		}).then(
 			(res) => {
 				console.log(res);

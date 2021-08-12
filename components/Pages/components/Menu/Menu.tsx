@@ -142,9 +142,11 @@ class Menu extends React.Component<any, State> {
 
 	async getMenus() {
 		const data = await axios.get(CSSCONST.BACK_URL + "menu").then((res) => {
-      const d = res.data;
+            console.log(res);
+			const d = res.data;
 			res.data.sort(sortIndex);
 			this.setState({ menus: res.data });
+			
 			console.log(res.data);
 		});
 
@@ -209,7 +211,6 @@ class Menu extends React.Component<any, State> {
 					showOrderSuccessNotion={this.state.showOrderSuccessNotion}
 					turnOnOrderNotion = {()=>this.setState({showOrderSuccessNotion:true})}
 								
-									
 					></SmallSaveOrder>
 							{CATEGORY.map(({ key, value }) => {
 								return (

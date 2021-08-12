@@ -48,6 +48,9 @@ class UpdateForm extends React.Component<Props, State> {
       method: "patch",
       url: CSSCONST.BACK_URL + "menu" + "/" + fd.get("id"),
       data: body,
+      headers:{
+        Authorization:localStorage.getItem("jwt")
+    }
     }).then(
       (res) => {
         console.log(res);
@@ -65,7 +68,6 @@ class UpdateForm extends React.Component<Props, State> {
       }}>
 
    <Form
-        
         onSubmit={(e: any) => {
           this.patchMenuForm(e);
         }}

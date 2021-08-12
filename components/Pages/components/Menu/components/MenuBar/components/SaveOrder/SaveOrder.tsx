@@ -82,6 +82,9 @@ class SaveOrder extends Component<Props,State>{
             method: "patch",
             url: CSSCONST.BACK_URL + "menu" + "/" + ele.id,
             data: body,
+            headers:{
+              Authorization:localStorage.getItem("jwt")
+          }
           }).then(
             (res) => {
                
