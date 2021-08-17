@@ -1,5 +1,5 @@
 import React from 'react';
-import styled,{css} from 'styled-components';
+import styled,{css, ThemeConsumer} from 'styled-components';
 import CSSCONST from '../../../../cssConst';
 import {Link} from 'react-router-dom';
 import { Switch, Route, withRouter, RouteComponentProps} from 'react-router-dom';
@@ -40,8 +40,17 @@ const LogButton = styled.button`
   width: 80px;
   border-radius: 8px;
 `;
-interface Props{
+const LoginInfo = styled.div`
+color: white;
 
+align-items: flex-end;
+padding-bottom: 10px;
+
+`;
+interface Props{
+   showLoginOrNot:()=>void;
+   username:string;
+   changeUserName:(s:string)=>void;
 };
 interface State {
 }
@@ -55,6 +64,7 @@ class Banner  extends React.Component<Props,State> {
  logOut(){
    localStorage.removeItem("jwt");
    console.log(localStorage.getItem("jwt"));
+
  }
 
  render(){
@@ -62,8 +72,15 @@ class Banner  extends React.Component<Props,State> {
    return <BannerBG>
    <BannerText>
        <Text>DASH BOARD</Text>
-       <LogButton>Login</LogButton>
-       <LogButton onClick={()=>this.logOut()}>Logout</LogButton>
+       <LoginInfo style={{display: this.props.username===null ? "none":"flex"}} >Welcome! {this.props.username}</LoginInfo>
+       <LogButton style={{display:this.props.username===null ? "":"none"}}  onClick={(e)=>{e.preventDefault;this.props.showLoginOrNot();console.log("I am in banner!");
+       }}>Login</LogButton>
+       <LogButton style={{display:this.props.username===null ? "none":""}} 
+       onClick={()=>{this.logOut()
+         this.props.changeUserName(null);
+       }
+        
+        }>Logout</LogButton>
    </BannerText>
 </BannerBG>
 

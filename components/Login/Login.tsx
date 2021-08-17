@@ -8,15 +8,17 @@ import { timers } from 'jquery';
 
 const LoginWarper = styled.div`
   z-index: 10;
-  width: 350px;
+  width: 500px;
   height: 320px;
-  background-color: green;
+  background-color:white;
   position: fixed;
   left: 40%;
-  display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 4px;
+  border-color: ${CSSCONST.BLUE};
+  border-style: solid;
+  box-shadow:0px 10px 6px 5px rgb(0 0 0 / 20%);
 `;
 const Form = styled.form`
  display: flex;
@@ -24,6 +26,7 @@ const Form = styled.form`
   align-items: center;
   justify-content: center;
   width: 100%;
+  position: relative;
 `;
 const Input = styled.input`
  width: 80%;
@@ -35,6 +38,7 @@ const Text = styled.div`
   font-family:${CSSCONST.FONT_NORICAN};
   font-size:40px;
   margin-bottom: 6%;
+
 `;
 const Button = styled.button`
   border-radius: 5px;
@@ -62,10 +66,21 @@ const Buttonwarper = styled.div`
  width: 80%;
  justify-content: space-between;
 `;
+const CrossSymble = styled.button`
+ position: absolute;
+ right: 10%;
+ top: 5%;
+ border: 0ch;
+ background-color: white;
+
+`;
 
  interface Props{
-
- };
+    showLoginOrNot:(flag:boolean)=>void;
+    changeLoginInfo:(s:string)=>void;
+    loginShowOrNot:boolean;
+    changeUserName:(s:string)=>void; 
+};
  interface State {
      passwordHint:string,
  }
@@ -73,11 +88,13 @@ const Buttonwarper = styled.div`
 class Login extends React.Component<Props,State>{
     
     constructor(props:any){
+  
         super(props);
         this.loginSubmit = this.loginSubmit.bind(this);
         this.getPasswordHint = this.getPasswordHint.bind(this);
         this.state={
             passwordHint:null,
+           
         }
     }
     async getPasswordHint(e: any) {
@@ -102,7 +119,14 @@ class Login extends React.Component<Props,State>{
             })
 
           },
-          (error) => console.log(error)
+          (error) =>{
+            console.log(error)
+            console.log("please Login in first");
+            this.setState({
+                passwordHint:"Please input the Correct User name",
+            })
+          }
+
         );
       }
 
@@ -115,7 +139,6 @@ class Login extends React.Component<Props,State>{
           username: String(fd.get("username")).trim(),
           password: String(fd.get("password")).trim(),
         };
-        
 
         await axios({
           method: "post",
@@ -128,19 +151,32 @@ class Login extends React.Component<Props,State>{
               const token = res.headers.authorization;
             localStorage.setItem("jwt",token);
             console.log("TOKEN STORAGE: "+localStorage.getItem("jwt"));
+            let strings = token.split("."); //截取token，获取载体
+            let userinfo = JSON.parse(decodeURIComponent(escape(window.atob(strings[1].replace(/-/g, "+").replace(/_/g, "/")))));
+            console.log(userinfo);
+            console.log(userinfo.sub);
+            this.props.changeUserName(userinfo.sub);
+            this.props.showLoginOrNot(false);
           },
-          (error) => console.log(error)
+          (error) => {
+            console.log(error)
+            this.setState({
+                passwordHint:"Sorry, your password or username wrong",
+            })
+
+          }
         );
       }
 
     
     render(){
-        return <LoginWarper>
+        return <LoginWarper style={{display:this.props.loginShowOrNot ? "flex":"none"}}>
                 
                <Form   onSubmit={(e: any) => {
           this.loginSubmit(e);
         }}>
                    <Text>Login</Text>
+                   <CrossSymble onClick={()=>this.props.showLoginOrNot(false)}>✖️</CrossSymble>
                    <Label htmlFor='username'>User Name: </Label>
                    <Input type='text' required name='username' id='username' ></Input>
                    <Label htmlFor='password'>Password:</Label>

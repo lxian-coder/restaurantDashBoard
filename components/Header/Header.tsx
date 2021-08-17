@@ -15,7 +15,10 @@ const HeaderWarper = styled.header`
 interface Props  {
    dropMenu:boolean,
    toggleDropMenu:(dropMenu:boolean) => void,
-   currentPage:String 
+   currentPage:String,
+   showLoginOrNot:(flag:boolean)=>void,
+   username:string,
+   changeUserName:(s:string)=>void,
 }
 class Header extends React.Component<Props>{
    constructor(props:Props){
@@ -24,7 +27,10 @@ class Header extends React.Component<Props>{
 
    render(){
       return <HeaderWarper>
-      <Banner  />
+      <Banner username={this.props.username}
+      showLoginOrNot={()=>this.props.showLoginOrNot(true)} 
+      changeUserName={(s)=>this.props.changeUserName(s)}
+      />
       <NavBar currentPage={this.props.currentPage} dropMenu={this.props.dropMenu} toggleDropMenu={this.props.toggleDropMenu}/>
     </HeaderWarper> ;
  }
