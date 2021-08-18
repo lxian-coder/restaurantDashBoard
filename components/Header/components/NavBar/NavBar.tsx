@@ -113,6 +113,9 @@ const ITEMS = [{
 },{
     key:'upcomingEvents',
     tabPage:PAGE.UPCOMMING,
+},{
+    key:'STAFF',
+    tabPage:PAGE.STAFF,
 },]
 
 const NavBar = (props:{dropMenu:boolean, toggleDropMenu:(dropMenu:boolean)=>void,currentPage:String})=>{

@@ -4,5 +4,6 @@ export const PAGE = {
     MENUS:'MENUS',
     UPCOMMING:'UPCOMING EVENTS',
     CONTACT:'CONTACT',
+    STAFF:'STAFF',
 
 }

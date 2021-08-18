@@ -3,6 +3,7 @@ import styled,{css} from 'styled-components';
 import CSSCONST from '../../cssConst';
 import Menu from './components/Menu/Menu';
 import EVENTS from './components/Events/Events';
+import Staff from './components/Staff/Staff';
 import { Switch, Route, withRouter, RouteComponentProps} from 'react-router-dom';
 import ScrollToTop from '../../ScrollToTop/ScrollToTop';
 import { PAGE } from '../../PAGE';
@@ -67,7 +68,8 @@ class Pages extends React.Component<Props,State>{
       <PageWarper>
          <Route path="/" exact component={Menu}></Route> 
          <Route path="/MENUS" component={Menu} ></Route>
-         <Route path="/UPCOMING EVENTS"  component={EVENTS}></Route>  
+         <Route path="/UPCOMING EVENTS"  component={EVENTS}></Route> 
+         <Route path="/STAFF" component={Staff} ></Route> 
       </PageWarper>
       </Switch>
       </ScrollToTop>
