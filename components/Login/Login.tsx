@@ -155,6 +155,10 @@ class Login extends React.Component<Props,State>{
             let userinfo = JSON.parse(decodeURIComponent(escape(window.atob(strings[1].replace(/-/g, "+").replace(/_/g, "/")))));
             console.log(userinfo);
             console.log(userinfo.sub);
+            
+            const authority = userinfo.authorities[0]["authority"];
+            localStorage.setItem("authority",authority);
+            console.log(localStorage.getItem("authority"));
             this.props.changeUserName(userinfo.sub);
             this.props.showLoginOrNot(false);
           },

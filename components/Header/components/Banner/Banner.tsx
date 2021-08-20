@@ -63,6 +63,7 @@ class Banner  extends React.Component<Props,State> {
 
  logOut(){
    localStorage.removeItem("jwt");
+   localStorage.removeItem("authority");
    console.log(localStorage.getItem("jwt"));
 
  }
@@ -79,7 +80,6 @@ class Banner  extends React.Component<Props,State> {
        onClick={()=>{this.logOut()
          this.props.changeUserName(null);
        }
-        
         }>Logout</LogButton>
    </BannerText>
 </BannerBG>

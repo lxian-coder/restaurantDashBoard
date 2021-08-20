@@ -18,7 +18,6 @@ const LoginWarper = styled.div`
   border-color: ${CSSCONST.BLUE};
   border-style: solid;
   box-shadow:0px 10px 6px 5px rgb(0 0 0 / 20%);
-  
 `;
 const Form = styled.form`
  display: flex;
@@ -27,7 +26,6 @@ const Form = styled.form`
   justify-content: center;
   width: 100%;
   position: relative;
-  
 `;
 const Input = styled.input`
  width: 80%;
@@ -73,6 +71,11 @@ const CrossSymble = styled.button`
  top: 5%;
  border: 0ch;
  background-color: white;
+`;
+const AuthSelectWarper = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
 
 `;
 
@@ -89,10 +92,11 @@ interface staff {
 }
  interface Props{
      staff:staff;
-     showId:number;
+     updateFormShowId:number;
+     hideUpdateForm:()=>void;
  }
  interface State {
-  showOrNot:boolean;
+     selected:string;
  }
 
 class UpdateForm extends React.Component<Props,State>{
@@ -102,22 +106,32 @@ class UpdateForm extends React.Component<Props,State>{
         super(props);
 
         this.state={
-         showOrNot:true
-           
+         selected:"",
         }
     }
    
 
-
+componentDidMount(){
+    this.props.staff.authorities.map((ele)=>{
+     console.log(ele.permission);
+     this.setState({
+         selected:ele.permission
+     })
+    
+    })
+}
     
     render(){
-        return <LoginWarper style={{display:this.props.staff.id === this.props.showId ? "":"none"}} >
+        return <LoginWarper style={{display:this.props.staff.id === this.props.updateFormShowId  ? "":"none"}} >
                 
                <Form   onSubmit={(e: any) => {
         
         }}>
                    <Text>Update</Text>
-                   <CrossSymble >✖️</CrossSymble>
+                   <CrossSymble onClick={(e)=>{
+                   e.preventDefault;
+                   this.props.hideUpdateForm();
+                   }} >✖️</CrossSymble>
                    <Label htmlFor='username'> User Name: </Label>
                    <Input type='text' required name='username' id='username'
                      defaultValue={this.props.staff.username}
@@ -127,19 +141,23 @@ class UpdateForm extends React.Component<Props,State>{
                    <Label htmlFor='password'>PasswordHint:</Label>
                    <Input type='text' required name='password' id='password'
                    defaultValue={this.props.staff.passwordHint}></Input>
-                   <Label htmlFor='authorities'>Authority:</Label>
-                   <Input type='text' required name='authorities' id='authorities'
-                   defaultValue={this.props.staff.authorities.map((ele)=>ele.permission)}></Input>
+                   <AuthSelectWarper>
+                   <Label style={{marginRight:"20%"}}htmlFor="authoritySelect">Authority:</Label>
+
+       <select name="authoritySelect" id="authoritySelect" value={this.state.selected}>
+         <option  value="ROLE_BOSS" >BOSS</option>
+         <option  value="ROLE_STAFF"  >STAFF</option>
+         <option  style={{display:localStorage.getItem("authority") !== "ROLE_ADMIN" ? "none":""}} value="ROLE_ADMIN"  >ADMIN</option>
+        </select> 
+
+                   </AuthSelectWarper>
                    <Buttonwarper>
                    <InputBtn type='submit'></InputBtn>
-                   <Button >Cancel</Button>
-                   </Buttonwarper>
+                   <Button onClick={()=>this.props.hideUpdateForm()}>Cancel</Button>
+                   </Buttonwarper> 
               </Form>
-            </LoginWarper>
+            </LoginWarper> 
     }
 }
 
-export default UpdateForm; 
-
-
-
+export default UpdateForm;

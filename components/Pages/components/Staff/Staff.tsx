@@ -89,14 +89,15 @@ class Staff extends React.Component<Props,State>{
       this.state={
        staff:[],
        delete:false,
-       updateFormShowID:null
+       updateFormShowID:null,
+       
       }
      
       this.getUsers = this.getUsers.bind(this);
       this.deleteTrue = this.deleteTrue.bind(this);
       this.deleteFalse = this.deleteFalse.bind(this);
       this.deleteUser = this.deleteUser.bind(this);
-      this.changeUpdateFormShow = this.changeUpdateFormShow.bind(this);
+      this.hideUpdateForm = this.hideUpdateForm.bind(this);
     }
 	async getUsers() {
 		const data = await axios(
@@ -127,9 +128,9 @@ class Staff extends React.Component<Props,State>{
         delete:false,
     })
 }
-changeUpdateFormShow(){
+hideUpdateForm(num:number){
     this.setState({
-        updateFormShowID:null
+        updateFormShowID:num
     })
 }
 async deleteUser(id:number) {
@@ -166,12 +167,20 @@ componentDidMount(){
            
             <Btn className="add">ADD NEW</Btn>
             {this.state.staff.map((ele)=>{
-              return <div>
-                      <UpdateForm  showId={this.state.updateFormShowID} staff={ele}></UpdateForm>
+        
+    
+              return <div key={ele.id} style={{display:(localStorage.getItem("authority")!=="ROLE_ADMIN" && ele.authorities[0]["permission"]==="ROLE_ADMIN") || localStorage.getItem("authority")==="ROLE_STAFF" ? "none":""}} >
+                      <UpdateForm 
+                       updateFormShowId={this.state.updateFormShowID} staff={ele}
+                       hideUpdateForm={()=>{
+                        this.hideUpdateForm(-1);
+                       }}
+                       ></UpdateForm>
                     <UserRow >
                       <div>{ele.username}</div>
-                      {ele.authorities.map((ele)=>{
-                          return <div>{ele.permission}</div>
+                      {ele.authorities.map((ele2)=>{
+                          return <div key={ele2.id}>{ele2.permission}</div>
+                        
                       })}
                       <div>{ele.passwordHint}</div>
                       <BtnArea>
