@@ -44,7 +44,7 @@ const Btn = styled.button`
     &.add {
 		height: 45px;
         width: 13%;
-        margin-bottom: 6%;
+        margin-bottom: 3%;
 	}
 	&.con {
 		background-color: orangered;
@@ -62,6 +62,18 @@ const BtnArea = styled.div`
     @media only screen and (max-width: 557px){
           width: 30% ;
     }
+`;
+
+const TableTitle = styled.div`
+display: flex;
+width: 100%;
+justify-content: space-between;
+color:${CSSCONST.BLUE};
+margin-bottom:1.5%;
+`;
+const TableCln = styled.div`
+
+
 `;
 interface authority{
     id:number;
@@ -81,6 +93,7 @@ interface State{
   staff:staff[];
   delete:boolean;
   updateFormShowID:number;
+  deleteStaffID:number;
 }
 class Staff extends React.Component<Props,State>{
 
@@ -90,6 +103,7 @@ class Staff extends React.Component<Props,State>{
        staff:[],
        delete:false,
        updateFormShowID:null,
+       deleteStaffID:null,
        
       }
      
@@ -98,6 +112,7 @@ class Staff extends React.Component<Props,State>{
       this.deleteFalse = this.deleteFalse.bind(this);
       this.deleteUser = this.deleteUser.bind(this);
       this.hideUpdateForm = this.hideUpdateForm.bind(this);
+      this.setDeleteStaffID = this.setDeleteStaffID.bind(this);
     }
 	async getUsers() {
 		const data = await axios(
@@ -118,6 +133,11 @@ class Staff extends React.Component<Props,State>{
             console.log(this.state.staff);
 		});
 	}
+    setDeleteStaffID(id:number){
+       this.setState({
+           deleteStaffID:id,
+       })
+    }
    deleteTrue(){
        this.setState({
            delete:true,
@@ -155,7 +175,7 @@ componentDidMount(){
 }
     render(){
      
-        return <PageContainer>
+        return <PageContainer style={{zIndex:6}}>
         <Side1Warper style={{marginBottom:"450px"}}>
               <SideFixed>
               <Title>Staff List</Title>
@@ -164,8 +184,17 @@ componentDidMount(){
 
         </Side1Warper >
        <Side2Warper >
-           
+            
             <Btn className="add">ADD NEW</Btn>
+            <TableTitle>
+                          <TableCln>NAME</TableCln>
+                          <TableCln>ROLE</TableCln>
+                          <TableCln>PASSWORD/HINT</TableCln>
+                          <TableCln></TableCln>
+                          <TableCln></TableCln>
+                          
+            </TableTitle>
+                      
             {this.state.staff.map((ele)=>{
         
     
@@ -176,6 +205,7 @@ componentDidMount(){
                         this.hideUpdateForm(-1);
                        }}
                        ></UpdateForm>
+                    
                     <UserRow >
                       <div>{ele.username}</div>
                       {ele.authorities.map((ele2)=>{
@@ -184,26 +214,29 @@ componentDidMount(){
                       })}
                       <div>{ele.passwordHint}</div>
                       <BtnArea>
-                      <Btn style={{display: this.state.delete ? "none":""}}
+                      <Btn style={{display: this.state.delete && ele.id === this.state.deleteStaffID ? "none":""}}
                         onClick={(e)=>{
                             e.preventDefault();
                             this.deleteFalse();
                             this.setState({updateFormShowID:ele.id})
                         }}
                        >UPDATE</Btn>
-                      <Btn style={{display: this.state.delete ? "none":""}}
+                      <Btn style={{display: this.state.delete && ele.id === this.state.deleteStaffID ? "none":""}}
                       onClick={(e)=>{
                           e.preventDefault();
                           this.deleteTrue();
+                          this.setDeleteStaffID(ele.id);
+                         
                       }}>DELETE</Btn>
-                      <Btn className="con" style={{display: this.state.delete ? "":"none"}}
+                      <Btn className="con" style={{display: this.state.delete && ele.id === this.state.deleteStaffID? "":"none"}}
                        onClick={(e)=>{
                            e.preventDefault();
                             this.deleteUser(ele.id);
                             this.deleteFalse();
+                            
                            
                        }}>CONFIRM</Btn>
-                      <Btn style={{display: this.state.delete ? "":"none"}}
+                      <Btn style={{display: this.state.delete && ele.id === this.state.deleteStaffID ? "":"none"}}
                       onClick={(e)=>{
                           e.preventDefault();
                           this.deleteFalse();

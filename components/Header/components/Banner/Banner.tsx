@@ -70,7 +70,7 @@ class Banner  extends React.Component<Props,State> {
 
  render(){
     const HREF = CSSCONST.BACK_URL+"logout";
-   return <BannerBG>
+   return <BannerBG style={{zIndex:6}}>
    <BannerText>
        <Text>DASH BOARD</Text>
        <LoginInfo style={{display: this.props.username===null ? "none":"flex"}} >Welcome! {this.props.username}</LoginInfo>

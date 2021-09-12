@@ -5,9 +5,8 @@ import axios from 'axios';
 const URL = 'https://test.sealiferestaurantbicheno.com/';
 
 const LoginWarper = styled.div`
-  z-index: 10;
-  width: 500px;
-  height: 320px;
+
+  width: 400px;
   background-color:white;
   position: fixed;
   top:25%;
@@ -64,6 +63,7 @@ const Buttonwarper = styled.div`
  flex-direction: row;
  width: 80%;
  justify-content: space-between;
+ margin-bottom: 14px;
 `;
 const CrossSymble = styled.button`
  position: absolute;
@@ -76,6 +76,7 @@ const AuthSelectWarper = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-between;
+margin-bottom: 15px;
 
 `;
 
@@ -104,27 +105,75 @@ class UpdateForm extends React.Component<Props,State>{
     constructor(props:any){
   
         super(props);
-
         this.state={
          selected:"",
         }
-    }
-   
 
-componentDidMount(){
-    this.props.staff.authorities.map((ele)=>{
-     console.log(ele.permission);
-     this.setState({
-         selected:ele.permission
-     })
-    
+        this.updateForm = this.updateForm.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+    async updateForm(e: any) {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+
+        const body = {
+            // remove empty from start and end
+        
+          username: String(fd.get("username")).trim(),
+          password: String(fd.get("password")).trim(),
+          passwordHint:String(fd.get("passwordHint")).trim(),
+          authorities:String(fd.get("authoritySelect")).trim(),
+        };
+        console.log("HHHHHHHHHHH");
+        console.log(body.username);
+        console.log(body.password);
+        console.log(body.passwordHint);
+        console.log("ID");
+        
+        console.log(body.authorities);
+        
+
+        await axios({
+          method: "patch",
+          url: CSSCONST.BACK_URL +"user/"+ String(fd.get("id")).trim(),
+          data: body,
+          headers:{
+            Authorization:localStorage.getItem("jwt")
+        }
+        }).then(
+          (res) => {
+              console.log(res);
+     
+          },
+          (error) => {
+            console.log(error)
+
+          }
+        );
+      }
+      handleChange(e:any){
+           e.preventDefault();
+           console.log(e.target.value);
+          this.setState({selected: e.target.value});
+          console.log("the true selected is : ");
+          
+          console.log(this.state.selected);
+          
+
+      }
+
+componentWillMount(){
+    const auth = this.props.staff.authorities[0]["permission"];
+    this.setState({
+       selected:auth,
     })
+    
 }
     
     render(){
         return <LoginWarper style={{display:this.props.staff.id === this.props.updateFormShowId  ? "":"none"}} >
                 
-               <Form   onSubmit={(e: any) => {
+               <Form   onSubmit={(e: any) => { this.updateForm(e);
         
         }}>
                    <Text>Update</Text>
@@ -138,15 +187,16 @@ componentDidMount(){
                    ></Input>
                    <Label htmlFor='password'>Password:</Label>
                    <Input type='password' required name='password' id='password'></Input>
-                   <Label htmlFor='password'>PasswordHint:</Label>
-                   <Input type='text' required name='password' id='password'
+                   <Label htmlFor='passwordHint'>PasswordHint:</Label>
+                   <Input type='text' required name='passwordHint' id='passwordHint'
                    defaultValue={this.props.staff.passwordHint}></Input>
                    <AuthSelectWarper>
                    <Label style={{marginRight:"20%"}}htmlFor="authoritySelect">Authority:</Label>
+                   <input style={{display:"none"}} defaultValue={this.props.staff.id} name="id" id="id"></input>
 
-       <select name="authoritySelect" id="authoritySelect" value={this.state.selected}>
+       <select name="authoritySelect" id="authoritySelect" value={this.state.selected} onChange={(e:any)=>this.handleChange(e)} >
          <option  value="ROLE_BOSS" >BOSS</option>
-         <option  value="ROLE_STAFF"  >STAFF</option>
+         <option  value="ROLE_STAFF" >STAFF</option>
          <option  style={{display:localStorage.getItem("authority") !== "ROLE_ADMIN" ? "none":""}} value="ROLE_ADMIN"  >ADMIN</option>
         </select> 
 
