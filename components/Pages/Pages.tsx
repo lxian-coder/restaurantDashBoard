@@ -35,6 +35,7 @@ const map = new Map();
 map.set('/MENUS',PAGE.MENUS);
 map.set('/UPCOMING EVENTS',PAGE.UPCOMMING);
 map.set('/',PAGE.MENUS);
+map.set('/STAFF',PAGE.STAFF);
 
 
 class Pages extends React.Component<Props,State>{
@@ -46,6 +47,9 @@ class Pages extends React.Component<Props,State>{
    // 让page change with URL
   changePageWithURL(){
     let URL = this.props.history.location.pathname;
+
+    
+    
     this.props.changePage(map.get(URL));
  
   }

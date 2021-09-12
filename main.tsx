@@ -3,5 +3,6 @@ import ReactDOM from 'react-dom';
 import './style.scss';
 
 import App from './components/App/App';
-
-ReactDOM.render(<App/>, document.querySelector("#root"));
+import hoc from './HOC'
+const HocApp = hoc(App);
+ReactDOM.render(<HocApp/>, document.querySelector("#root"));

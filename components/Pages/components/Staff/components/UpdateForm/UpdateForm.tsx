@@ -178,7 +178,7 @@ componentWillMount(){
         }}>
                    <Text>Update</Text>
                    <CrossSymble onClick={(e)=>{
-                   e.preventDefault;
+                   e.preventDefault();
                    this.props.hideUpdateForm();
                    }} >✖️</CrossSymble>
                    <Label htmlFor='username'> User Name: </Label>
@@ -203,7 +203,9 @@ componentWillMount(){
                    </AuthSelectWarper>
                    <Buttonwarper>
                    <InputBtn type='submit'></InputBtn>
-                   <Button onClick={()=>this.props.hideUpdateForm()}>Cancel</Button>
+                   <Button onClick={(e)=>{
+                     e.preventDefault(),
+                     this.props.hideUpdateForm()}}>Cancel</Button>
                    </Buttonwarper> 
               </Form>
             </LoginWarper> 
