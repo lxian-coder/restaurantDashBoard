@@ -162,8 +162,9 @@ class Login extends React.Component<Props,State>{
             console.log(localStorage.getItem("authority"));
             this.props.changeUserName(userinfo.sub);
             this.props.showLoginOrNot(false);
+           // window.location.reload();
             this.props.LoginState();
-           window.location.reload();
+           
           },
           (error) => {
             console.log(error)
