@@ -6,7 +6,9 @@ import {Side2Warper} from '../SIde2/Side2';
 import {Line,ImgContainer,PageContainer,Iframe} from '../utils/Tools';
 import axios from 'axios';
 import UpdateForm from './components/UpdateForm/UpdateForm';
-UpdateForm
+import AddForm from './components/AddForm/AddForm';
+
+
 const URL = 'https://test.sealiferestaurantbicheno.com/';
 
 const GREEN = " rgb(4, 170, 109)";
@@ -94,6 +96,7 @@ interface State{
   delete:boolean;
   updateFormShowID:number;
   deleteStaffID:number;
+  addShow:boolean;
 }
 class Staff extends React.Component<Props,State>{
 
@@ -104,6 +107,7 @@ class Staff extends React.Component<Props,State>{
        delete:false,
        updateFormShowID:null,
        deleteStaffID:null,
+       addShow:false,
        
       }
      
@@ -153,6 +157,11 @@ hideUpdateForm(num:number){
         updateFormShowID:num
     })
 }
+hideAddForm(){
+    this.setState({
+        addShow: false,
+    })
+}
 async deleteUser(id:number) {
     const data = await axios(
         {   method: "delete",
@@ -185,7 +194,12 @@ componentDidMount(){
         </Side1Warper >
        <Side2Warper >
             
-            <Btn className="add">ADD NEW</Btn>
+            <Btn className="add" onClick={(e)=>{
+              e.preventDefault();
+              this.setState({
+                  addShow:true,
+              })
+            }}>ADD NEW</Btn>
             <TableTitle>
                           <TableCln>NAME</TableCln>
                           <TableCln>ROLE</TableCln>
@@ -195,60 +209,65 @@ componentDidMount(){
                           
             </TableTitle>
                       
+        {this.state.addShow && <AddForm hideAddForm={()=>this.hideAddForm()}></AddForm>}
+                
             {this.state.staff.map((ele)=>{
         
     
-              return <div key={ele.id} style={{display:(localStorage.getItem("authority")!=="ROLE_ADMIN" && ele.authorities[0]["permission"]==="ROLE_ADMIN") || localStorage.getItem("authority")==="ROLE_STAFF" ? "none":""}} >
-                      <UpdateForm 
-                       updateFormShowId={this.state.updateFormShowID} staff={ele}
-                       hideUpdateForm={()=>{
-                        this.hideUpdateForm(-1);
-                       }}
-                       ></UpdateForm>
+             return <div key={ele.id} style={{display:(localStorage.getItem("authority")!=="ROLE_ADMIN" && ele.authorities[0]["permission"]==="ROLE_ADMIN") || localStorage.getItem("authority")==="ROLE_STAFF" ? "none":""}} >
+                <UpdateForm 
+                 updateFormShowId={this.state.updateFormShowID} staff={ele}
+                 hideUpdateForm={()=>{
+                  this.hideUpdateForm(-1);
+                 }}
+                 ></UpdateForm>
+              
+              <UserRow >
+                <div>{ele.username}</div>
+                {ele.authorities.map((ele2)=>{
+                    return <div key={ele2.id}>{ele2.permission}</div>
+                  
+                })}
+                <div>{ele.passwordHint}</div>
+                <BtnArea>
+                <Btn style={{display: this.state.delete && ele.id === this.state.deleteStaffID ? "none":""}}
+                  onClick={(e)=>{
+                      e.preventDefault();
+                      this.deleteFalse();
+                      this.setState({updateFormShowID:ele.id})
+                  }}
+                 >UPDATE</Btn>
+                <Btn style={{display: this.state.delete && ele.id === this.state.deleteStaffID ? "none":""}}
+                onClick={(e)=>{
+                    e.preventDefault();
+                    this.deleteTrue();
+                    this.setDeleteStaffID(ele.id);
                     
-                    <UserRow >
-                      <div>{ele.username}</div>
-                      {ele.authorities.map((ele2)=>{
-                          return <div key={ele2.id}>{ele2.permission}</div>
-                        
-                      })}
-                      <div>{ele.passwordHint}</div>
-                      <BtnArea>
-                      <Btn style={{display: this.state.delete && ele.id === this.state.deleteStaffID ? "none":""}}
-                        onClick={(e)=>{
-                            e.preventDefault();
-                            this.deleteFalse();
-                            this.setState({updateFormShowID:ele.id})
-                        }}
-                       >UPDATE</Btn>
-                      <Btn style={{display: this.state.delete && ele.id === this.state.deleteStaffID ? "none":""}}
-                      onClick={(e)=>{
-                          e.preventDefault();
-                          this.deleteTrue();
-                          this.setDeleteStaffID(ele.id);
-                         
-                      }}>DELETE</Btn>
-                      <Btn className="con" style={{display: this.state.delete && ele.id === this.state.deleteStaffID? "":"none"}}
-                       onClick={(e)=>{
-                           e.preventDefault();
-                            this.deleteUser(ele.id);
-                            this.deleteFalse();
-                            
-                           
-                       }}>CONFIRM</Btn>
-                      <Btn style={{display: this.state.delete && ele.id === this.state.deleteStaffID ? "":"none"}}
-                      onClick={(e)=>{
-                          e.preventDefault();
-                          this.deleteFalse();
-                      }}
-                      >CANCEL</Btn>
-                      </BtnArea>
+                }}>DELETE</Btn>
+                <Btn className="con" style={{display: this.state.delete && ele.id === this.state.deleteStaffID? "":"none"}}
+                 onClick={(e)=>{
+                     e.preventDefault();
+                      this.deleteUser(ele.id);
+                      this.deleteFalse();
+                      window.location.reload();
+                     
+                 }}>CONFIRM</Btn>
+                <Btn style={{display: this.state.delete && ele.id === this.state.deleteStaffID ? "":"none"}}
+                onClick={(e)=>{
+                    e.preventDefault();
+                    this.deleteFalse();
+                    
+                }}
+                >CANCEL</Btn>
+                </BtnArea>
 
-                   </UserRow>
-              </div>
+             </UserRow>
+        </div>
 
 
-            })}
+      })}
+           
+               
 
        </Side2Warper>
 </PageContainer>

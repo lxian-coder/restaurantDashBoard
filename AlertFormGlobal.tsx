@@ -22,7 +22,7 @@ const LoginWarper = styled.div`
 const Text = styled.div`
 display: flex;
   font-family:${CSSCONST.FONT_ALATA};
-  font-size:25px;
+  font-size:18px;
   margin-bottom: 4%;
   justify-content: center;
   margin-top:4%;

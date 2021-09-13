@@ -2,10 +2,9 @@ import React from 'react';
 import styled,{css, ThemeConsumer} from 'styled-components';
 import CSSCONST from '../../../../../../cssConst';
 import axios from 'axios';
-const URL = 'https://test.sealiferestaurantbicheno.com/';
+
 
 const LoginWarper = styled.div`
-
   width: 400px;
   background-color:white;
   position: fixed;
@@ -92,27 +91,29 @@ interface staff {
     authorities:authority[];
 }
  interface Props{
-     staff:staff;
-     updateFormShowId:number;
-     hideUpdateForm:()=>void;
+     
+     hideAddForm:()=>void;
+
  }
  interface State {
      selected:string;
+  
  }
 
-class UpdateForm extends React.Component<Props,State>{
+class AddForm extends React.Component<Props,State>{
     
     constructor(props:any){
   
         super(props);
         this.state={
          selected:"",
+       
         }
 
-        this.updateForm = this.updateForm.bind(this);
+        this.addNewUser = this.addNewUser.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
-    async updateForm(e: any) {
+    async addNewUser(e: any) {
         e.preventDefault();
         const fd = new FormData(e.target);
      
@@ -130,24 +131,18 @@ class UpdateForm extends React.Component<Props,State>{
            
           ]
         };
-        console.log("HHHHHHHHHHH");
-        console.log(body.username);
-     
-        console.log(body.passwordHint);
-        console.log("ID");
         
-        console.log(body.authorities);
-        
-
         await axios({
-          method: "patch",
-          url: CSSCONST.BACK_URL +"user/"+ String(fd.get("id")).trim(),
+          method: "post",
+          url: CSSCONST.BACK_URL +"user",
           data: body,
           headers:{
             Authorization:localStorage.getItem("jwt")
         }
         }).then(
           (res) => {
+              this.props.hideAddForm();
+              window.location.reload();
               console.log(res);
      
           },
@@ -168,37 +163,28 @@ class UpdateForm extends React.Component<Props,State>{
 
       }
 
-componentWillMount(){
-    const auth = this.props.staff.authorities[0]["permission"];
-    this.setState({
-       selected:auth,
-    })
-    
-}
     
     render(){
-        return <LoginWarper style={{display:this.props.staff.id === this.props.updateFormShowId || this.props.updateFormShowId === 0.1  ? "":"none"}} >
+        return <LoginWarper >
                 
-               <Form   onSubmit={(e: any) => { this.updateForm(e);
+               <Form   onSubmit={(e: any) => { this.addNewUser(e);
         
         }}>
-                   <Text>Update</Text>
+                   <Text>Add New</Text>
                    <CrossSymble onClick={(e)=>{
                    e.preventDefault();
-                   this.props.hideUpdateForm();
+                   this.props.hideAddForm();
                    }} >✖️</CrossSymble>
                    <Label htmlFor='username'> User Name: </Label>
-                   <Input type='text' required name='username' id='username'
-                     defaultValue={this.props.staff.username}
-                   ></Input>
+                   <Input type='text' required name='username' id='username'></Input>
                    <Label htmlFor='password'>Password:</Label>
                    <Input type='password' required name='password' id='password'></Input>
                    <Label htmlFor='passwordHint'>PasswordHint:</Label>
                    <Input type='text' required name='passwordHint' id='passwordHint'
-                   defaultValue={this.props.staff.passwordHint}></Input>
+                    ></Input>
                    <AuthSelectWarper>
                    <Label style={{marginRight:"20%"}}htmlFor="authoritySelect">Authority:</Label>
-                   <input style={{display:"none"}} defaultValue={this.props.staff.id} name="id" id="id"></input>
+                   <input style={{display:"none"}}  name="id" id="id"></input>
 
        <select name="authoritySelect" id="authoritySelect" value={this.state.selected} onChange={(e:any)=>this.handleChange(e)} >
          <option  value="ROLE_BOSS" >BOSS</option>
@@ -208,14 +194,16 @@ componentWillMount(){
 
                    </AuthSelectWarper>
                    <Buttonwarper>
-                   <InputBtn type='submit'></InputBtn>
+                   <InputBtn type='submit' ></InputBtn>
                    <Button onClick={(e)=>{
                      e.preventDefault(),
-                     this.props.hideUpdateForm()}}>Cancel</Button>
+                     this.props.hideAddForm()}}>Cancel</Button>
                    </Buttonwarper> 
               </Form>
             </LoginWarper> 
     }
 }
 
-export default UpdateForm;
+export default AddForm;
+
+
