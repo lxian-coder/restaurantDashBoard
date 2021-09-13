@@ -9,8 +9,6 @@ import UpdateForm from './components/UpdateForm/UpdateForm';
 import AddForm from './components/AddForm/AddForm';
 
 
-const URL = 'https://test.sealiferestaurantbicheno.com/';
-
 const GREEN = " rgb(4, 170, 109)";
 
 
@@ -263,11 +261,7 @@ componentDidMount(){
 
              </UserRow>
         </div>
-
-
       })}
-           
-               
 
        </Side2Warper>
 </PageContainer>

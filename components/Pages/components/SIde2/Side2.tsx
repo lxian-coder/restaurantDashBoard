@@ -6,7 +6,7 @@ import CSSCONST from '../../../../cssConst';
 export const Side2Warper = styled.aside`
         display: flex;
         flex-direction:column;
-        justify-content: center;
+      
          width: 71%;
          @media only screen and (max-width:961px){
          width: 100%;

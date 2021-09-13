@@ -42,7 +42,7 @@ const LogButton = styled.button`
 `;
 const LoginInfo = styled.div`
 color: white;
-
+font-size: 22px;
 align-items: flex-end;
 padding-bottom: 10px;
 

@@ -148,6 +148,8 @@ class UpdateForm extends React.Component<Props,State>{
         }
         }).then(
           (res) => {
+            
+            window.location.reload();
               console.log(res);
      
           },
