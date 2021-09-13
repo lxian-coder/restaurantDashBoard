@@ -51,6 +51,7 @@ interface Props{
    showLoginOrNot:()=>void;
    username:string;
    changeUserName:(s:string)=>void;
+   LogoutState:()=>void;
 };
 interface State {
 }
@@ -65,7 +66,10 @@ class Banner  extends React.Component<Props,State> {
    localStorage.removeItem("jwt");
    localStorage.removeItem("authority");
    console.log(localStorage.getItem("jwt"));
-
+   console.log("))))))))))))))))))))))))))))");
+   console.log(localStorage.getItem("authority"));
+   this.props.LogoutState();
+   window.location.reload();
  }
 
  render(){
@@ -79,6 +83,7 @@ class Banner  extends React.Component<Props,State> {
        <LogButton style={{display:this.props.username===null ? "none":""}} 
        onClick={()=>{this.logOut()
          this.props.changeUserName(null);
+         
        }
         }>Logout</LogButton>
    </BannerText>

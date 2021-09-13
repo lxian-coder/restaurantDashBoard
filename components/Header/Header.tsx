@@ -19,22 +19,27 @@ interface Props  {
    showLoginOrNot:(flag:boolean)=>void,
    username:string,
    changeUserName:(s:string)=>void,
+   isLogin:boolean;
+   LogoutState: ()=>void,
+ 
 }
+
 class Header extends React.Component<Props>{
    constructor(props:Props){
       super(props);
    }
 
+  
    render(){
       return <HeaderWarper>
       <Banner username={this.props.username}
       showLoginOrNot={()=>this.props.showLoginOrNot(true)} 
       changeUserName={(s)=>this.props.changeUserName(s)}
+      LogoutState={()=>this.props.LogoutState()}
       />
-      <NavBar currentPage={this.props.currentPage} dropMenu={this.props.dropMenu} toggleDropMenu={this.props.toggleDropMenu}/>
+      <NavBar isLogin={this.props.isLogin} currentPage={this.props.currentPage} dropMenu={this.props.dropMenu} toggleDropMenu={this.props.toggleDropMenu}/>
     </HeaderWarper> ;
  }
 }
  
-
 export default Header;

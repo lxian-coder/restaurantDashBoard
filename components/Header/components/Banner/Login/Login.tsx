@@ -1,6 +1,6 @@
 import React from 'react';
 import styled,{css} from 'styled-components';
-import CSSCONST from '../../cssConst';
+import CSSCONST from '../../../../../cssConst';
 import { Switch, Route, withRouter, RouteComponentProps} from 'react-router-dom';
 import axios from 'axios';
 import { timers } from 'jquery';
@@ -80,6 +80,7 @@ const CrossSymble = styled.button`
     changeLoginInfo:(s:string)=>void;
     loginShowOrNot:boolean;
     changeUserName:(s:string)=>void; 
+    LoginState:()=>void;
 };
  interface State {
      passwordHint:string,
@@ -117,7 +118,7 @@ class Login extends React.Component<Props,State>{
             this.setState({
                 passwordHint:passwordHint,
             })
-
+            
           },
           (error) =>{
             console.log(error)
@@ -161,6 +162,8 @@ class Login extends React.Component<Props,State>{
             console.log(localStorage.getItem("authority"));
             this.props.changeUserName(userinfo.sub);
             this.props.showLoginOrNot(false);
+            this.props.LoginState();
+           window.location.reload();
           },
           (error) => {
             console.log(error)

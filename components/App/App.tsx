@@ -6,7 +6,7 @@ import styled,{css, ThemeConsumer} from 'styled-components';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {PAGE} from '../../PAGE';
 import {MEAL} from '../../MEAL';
-import Login from '../Login/Login';
+import Login from '../Header/components/Banner/Login/Login';
 
 const LoginContainer  = styled.div`
  position: absolute;
@@ -17,7 +17,8 @@ type State={
    currentPage:string;
    loginShowOrNot:boolean;
    loginInfo:string;
-   username:string
+   username:string;
+   isLogin:boolean;
 };
 
 class App extends React.Component<Props,State> {
@@ -29,15 +30,27 @@ class App extends React.Component<Props,State> {
           loginShowOrNot:false,
           loginInfo:null,
           username:null,
+          isLogin:false,
        };
-
+       this.LogoutState = this.LogoutState.bind(this);
+       this.LoginState = this.LoginState.bind(this);
        this.toggleDropMenu = this.toggleDropMenu.bind(this);
        this.changePage = this.changePage.bind(this);
        this.changeLoginMessage = this.changeLoginMessage.bind(this);
        this.showLoginOrNot = this.showLoginOrNot.bind(this);
        this.changeUserName = this.changeUserName.bind(this);
+  
     }
-
+    
+    LogoutState(){
+      this.setState({
+         isLogin:false,
+      })
+   }
+   LoginState(){
+      this.setState({
+         isLogin:true,
+      })}
     toggleDropMenu(dropMenu:boolean){
        this.setState({
           dropMenu:dropMenu,
@@ -78,18 +91,22 @@ class App extends React.Component<Props,State> {
     }
 
  render(){
-   const { dropMenu, currentPage,loginShowOrNot,username} = this.state;
+   const { dropMenu, currentPage,loginShowOrNot,username,isLogin} = this.state;
 
     return  <div>
           <Router >
           <Header dropMenu={dropMenu} toggleDropMenu={this.toggleDropMenu} showLoginOrNot={this.showLoginOrNot}  currentPage={currentPage}
            username={username}
            changeUserName={this.changeUserName}
+           isLogin={isLogin}
+           LogoutState={this.LogoutState}
+       
            ></Header>
                <LoginContainer>
                   <Login showLoginOrNot={this.showLoginOrNot} 
                      changeLoginInfo={this.changeLoginMessage} loginShowOrNot={loginShowOrNot}
                      changeUserName={this.changeUserName}
+                     LoginState={this.LoginState}
                      />
                </LoginContainer>
                <Pages changePage={this.changePage}></Pages>

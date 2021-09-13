@@ -118,7 +118,7 @@ const ITEMS = [{
     tabPage:PAGE.STAFF,
 },]
 
-const NavBar = (props:{dropMenu:boolean, toggleDropMenu:(dropMenu:boolean)=>void,currentPage:String})=>{
+const NavBar = (props:{dropMenu:boolean, isLogin:boolean, toggleDropMenu:(dropMenu:boolean)=>void,currentPage:String})=>{
   let showOrNot;
   if(props.dropMenu){
       showOrNot = 'flex';
@@ -137,10 +137,13 @@ const NavBar = (props:{dropMenu:boolean, toggleDropMenu:(dropMenu:boolean)=>void
 
                <Navbar show = {showOrNot}>
                {ITEMS.map((item) => (
-                   <Item active={props.currentPage === item.tabPage} key={item.key}  
-                   onclick={()=>{
-                                 props.toggleDropMenu(false);
-                   }}>{item.tabPage}</Item>
+                  
+                  <div style={{display: (props.isLogin === false && item.key ==="STAFF") ||  (localStorage.getItem("authority") === "ROLE_STAFF" && item.key ==="STAFF")  ? "none":"flex"}}>
+                   <Item  active={props.currentPage === item.tabPage} key={item.key}  
+                    onclick={()=>{ props.toggleDropMenu(false);
+                    }}>{item.tabPage}</Item>
+                  </div>  
+                  
                ))}
                </Navbar>
 
