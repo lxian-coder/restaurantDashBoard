@@ -4,6 +4,7 @@ import CSSCONST from '../../../../../../cssConst';
 import axios from 'axios';
 import AlertFormGlobal from '../../../../../../AlertFormGlobal';
 import { Switch, Route, withRouter, RouteComponentProps,Redirect} from 'react-router-dom';
+import Staff from '../../Staff';
 
 const LoginWarper = styled.div`
 
@@ -125,7 +126,7 @@ class UpdateForm extends React.Component<Props,State>{
        console.log("userName");
        console.log(userName);
        this.props.staffs.map((ele)=>{
-        if(ele.username === userName){
+        if(ele.username === userName && ele.username !== this.props.staff.username){
           
          isSame = true;
         console.log("checkIfUserExist return true!!!!!!! ");
