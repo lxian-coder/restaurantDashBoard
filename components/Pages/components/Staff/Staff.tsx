@@ -210,7 +210,7 @@ componentDidMount(){
                 
             {this.state.staff.map((ele)=>{
         
-    
+  
              return <div key={ele.id} style={{display:(localStorage.getItem("authority")!=="ROLE_ADMIN" && ele.authorities[0]["permission"]==="ROLE_ADMIN") || localStorage.getItem("authority")==="ROLE_STAFF" ? "none":""}} >
                 <UpdateForm 
                  updateFormShowId={this.state.updateFormShowID} staff={ele}

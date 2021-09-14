@@ -3,7 +3,7 @@ import styled,{css, ThemeConsumer} from 'styled-components';
 import CSSCONST from '../../../../../../cssConst';
 import axios from 'axios';
 import AlertFormGlobal from '../../../../../../AlertFormGlobal';
-
+import { Switch, Route, withRouter, RouteComponentProps,Redirect} from 'react-router-dom';
 
 const LoginWarper = styled.div`
 
@@ -155,8 +155,6 @@ class UpdateForm extends React.Component<Props,State>{
       
         
         if(isSame){
-       
-          
           this.setState({
              alertForm:true
            })
@@ -173,7 +171,7 @@ class UpdateForm extends React.Component<Props,State>{
         }).then(
           (res) => {
             
-          // window.location.reload();
+            window.location.reload();
               console.log(res);
      
           },

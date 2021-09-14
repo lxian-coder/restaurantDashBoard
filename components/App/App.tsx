@@ -91,7 +91,8 @@ class App extends React.Component<Props,State> {
     }
 
  render(){
-   const { dropMenu, currentPage,loginShowOrNot,username,isLogin} = this.state;
+   const { dropMenu, currentPage,loginShowOrNot,username,isLogin,} = this.state;
+
 
     return  <div>
           <HashRouter >

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled,{css} from 'styled-components';
 import CSSCONST from '../../../../../cssConst';
-import { Switch, Route, withRouter, RouteComponentProps} from 'react-router-dom';
+import { Switch, Route, withRouter, RouteComponentProps,Redirect} from 'react-router-dom';
 import axios from 'axios';
 import { timers } from 'jquery';
 
@@ -84,6 +84,7 @@ const CrossSymble = styled.button`
 };
  interface State {
      passwordHint:string,
+     
  }
 
 class Login extends React.Component<Props,State>{
@@ -130,7 +131,6 @@ class Login extends React.Component<Props,State>{
 
         );
       }
-
     async loginSubmit(e: any) {
         e.preventDefault();
         const fd = new FormData(e.target);
@@ -147,7 +147,7 @@ class Login extends React.Component<Props,State>{
           data: body,
 
         }).then(
-          (res) => {
+         async (res) => {
               console.log("haha");
               const token = res.headers.authorization;
             localStorage.setItem("jwt",token);
@@ -162,8 +162,9 @@ class Login extends React.Component<Props,State>{
             console.log(localStorage.getItem("authority"));
             this.props.changeUserName(userinfo.sub);
             this.props.showLoginOrNot(false);
-           // window.location.reload();
-            this.props.LoginState();
+          
+             window.location.reload();
+           
            
           },
           (error) => {
@@ -175,7 +176,10 @@ class Login extends React.Component<Props,State>{
           }
         );
       }
-
+componentDidMount(){
+  if(localStorage.getItem("authority")!== null)
+  this.props.LoginState();
+}
     
     render(){
         return <LoginWarper style={{display:this.props.loginShowOrNot ? "flex":"none"}}>
