@@ -41,11 +41,11 @@ export default (WrappedComponent: any) => {
           })
           if(error.response.status === 401){
             this.setState({
-                errorMsg: "Sorry, You are not authorised to use this page!",
+                errorMsg: "Login failed, please try again!",
               })
           }else if(error.response.status === 403){
               this.setState({
-                  errorMsg:"Sorry, You are not authorised to do anything here!",
+                  errorMsg:"You have not login!",
               })
           }
           return Promise.reject(error);

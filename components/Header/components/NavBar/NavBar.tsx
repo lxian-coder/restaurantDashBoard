@@ -142,8 +142,7 @@ const NavBar = (props:{dropMenu:boolean, isLogin:boolean, toggleDropMenu:(dropMe
                    <Item  active={props.currentPage === item.tabPage} key={item.key}  
                     onclick={()=>{ props.toggleDropMenu(false);
                     }}>{item.tabPage}</Item>
-                  </div>  
-                  
+                  </div> 
                ))}
                </Navbar>
 

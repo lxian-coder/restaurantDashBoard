@@ -4,7 +4,7 @@ import CSSCONST from './cssConst';
 
 
 const LoginWarper = styled.div`
-  width: 40%;
+  width: 32%;
   background-color:white;
   position: fixed;
   top:25%;
@@ -15,7 +15,7 @@ const LoginWarper = styled.div`
   border-color: ${CSSCONST.BLUE};
   border-style: solid;
   box-shadow:0px 10px 6px 5px rgb(0 0 0 / 20%);
-  z-index: 15;
+  z-index: 100;
 
 `;
 
@@ -23,6 +23,7 @@ const Text = styled.div`
 display: flex;
   font-family:${CSSCONST.FONT_ALATA};
   font-size:18px;
+  color:red;
   margin-bottom: 4%;
   justify-content: center;
   margin-top:4%;
@@ -34,7 +35,7 @@ width: 100%;
 justify-content: flex-end;
 padding-bottom: 5%;
   padding-right: 5%;
-  padding-top: 10%;
+  padding-top: 6%;
 `;
 const Button = styled.button`
   border-radius: 5px;

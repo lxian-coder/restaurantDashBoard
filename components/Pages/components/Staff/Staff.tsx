@@ -73,7 +73,6 @@ margin-bottom:1.5%;
 `;
 const TableCln = styled.div`
 
-
 `;
 interface authority{
     id:number;
@@ -172,10 +171,10 @@ async deleteUser(id:number) {
         const user = res.data;
         console.log("USER:")
         console.log(user);
+        window.location.reload();
     
     });
 }
-
 
 componentDidMount(){
   this.getUsers();
@@ -207,7 +206,7 @@ componentDidMount(){
                           
             </TableTitle>
                       
-        {this.state.addShow && <AddForm hideAddForm={()=>this.hideAddForm()}></AddForm>}
+        {this.state.addShow && <AddForm hideAddForm={()=>this.hideAddForm()} staff={this.state.staff}></AddForm>}
                 
             {this.state.staff.map((ele)=>{
         
@@ -215,6 +214,7 @@ componentDidMount(){
              return <div key={ele.id} style={{display:(localStorage.getItem("authority")!=="ROLE_ADMIN" && ele.authorities[0]["permission"]==="ROLE_ADMIN") || localStorage.getItem("authority")==="ROLE_STAFF" ? "none":""}} >
                 <UpdateForm 
                  updateFormShowId={this.state.updateFormShowID} staff={ele}
+                 staffs={this.state.staff}
                  hideUpdateForm={()=>{
                   this.hideUpdateForm(-1);
                  }}
@@ -247,7 +247,7 @@ componentDidMount(){
                      e.preventDefault();
                       this.deleteUser(ele.id);
                       this.deleteFalse();
-                      window.location.reload();
+                     
                      
                  }}>CONFIRM</Btn>
                 <Btn style={{display: this.state.delete && ele.id === this.state.deleteStaffID ? "":"none"}}

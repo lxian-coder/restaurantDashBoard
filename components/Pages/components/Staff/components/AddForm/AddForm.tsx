@@ -2,6 +2,7 @@ import React from 'react';
 import styled,{css, ThemeConsumer} from 'styled-components';
 import CSSCONST from '../../../../../../cssConst';
 import axios from 'axios';
+import AlertFormGlobal from '../../../../../../AlertFormGlobal';
 
 
 const LoginWarper = styled.div`
@@ -91,15 +92,16 @@ interface staff {
     authorities:authority[];
 }
  interface Props{
-     
      hideAddForm:()=>void;
-
+     staff:staff[];
  }
  interface State {
      selected:string;
+     alertForm:boolean;
+     findSameName:boolean;
   
  }
-
+let isSame: boolean = false;
 class AddForm extends React.Component<Props,State>{
     
     constructor(props:any){
@@ -107,18 +109,40 @@ class AddForm extends React.Component<Props,State>{
         super(props);
         this.state={
          selected:"",
-       
+         alertForm:false,
+         findSameName:false,
         }
 
         this.addNewUser = this.addNewUser.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.checkIfUserExist = this.checkIfUserExist.bind(this);
+        this.hideAlert = this.hideAlert.bind(this);
     }
+     checkIfUserExist(userName:string) {
+           if(isSame){
+             isSame = false;
+           }
+          this.props.staff.map((ele)=>{
+            if(ele.username === userName){
+              
+             isSame = true;
+            console.log("checkIfUserExist return true!!!!!!! ");
+            console.log(isSame);
+            
+            }
+            
+          })
+        
+     }
+     hideAlert(){
+       this.setState({
+         alertForm:false,
+       })
+     }
     async addNewUser(e: any) {
         e.preventDefault();
-        const fd = new FormData(e.target);
      
-
-      
+        const fd = new FormData(e.target);
         const body = {
             // remove empty from start and end
         
@@ -128,29 +152,44 @@ class AddForm extends React.Component<Props,State>{
           authorities:[{
             permission: String(fd.get("authoritySelect")).trim(),
           }
-           
           ]
-        };
+        };  
+        console.log("userNmame:");
+        console.log(body.username);
+        this.checkIfUserExist(body.username);
+        console.log("THIS>STATE>FINDSAMENAME");
+        console.log(this.state.findSameName);
         
-        await axios({
-          method: "post",
-          url: CSSCONST.BACK_URL +"user",
-          data: body,
-          headers:{
-            Authorization:localStorage.getItem("jwt")
-        }
-        }).then(
-          (res) => {
-              this.props.hideAddForm();
-              window.location.reload();
-              console.log(res);
-     
-          },
-          (error) => {
-            console.log(error)
 
+        if(isSame){
+          console.log("should stoped here, find same username!!!!!");
+          
+          this.setState({
+             alertForm:true
+           })
+        
+        }else{
+          await axios({
+            method: "post",
+            url: CSSCONST.BACK_URL +"user",
+            data: body,
+            headers:{
+              Authorization:localStorage.getItem("jwt")
           }
-        );
+          }).then(
+            (res) => {
+                this.props.hideAddForm();
+                window.location.reload();
+                console.log(res);
+       
+            },
+            (error) => {
+              console.log(error)
+  
+            }
+          );
+        }
+        
       }
       handleChange(e:any){
            e.preventDefault();
@@ -159,48 +198,55 @@ class AddForm extends React.Component<Props,State>{
           console.log("the true selected is : ");
           
           console.log(this.state.selected);
-          
 
       }
-
+    
     
     render(){
-        return <LoginWarper >
-                
-               <Form   onSubmit={(e: any) => { this.addNewUser(e);
+        return  <div>
+             {
+                 this.state.alertForm &&  <AlertFormGlobal hideAlert={()=>this.hideAlert()} >The user name already exists, Please change it.</AlertFormGlobal>
+               } 
+        <LoginWarper >
+            
+            <Form   onSubmit={(e: any) => { this.addNewUser(e);
+     
+     }}>
+                <Text>Add New</Text>
+                <CrossSymble onClick={(e)=>{
+                e.preventDefault();
+                this.props.hideAddForm();
+                }} >✖️</CrossSymble>
+                <Label htmlFor='username'> User Name: </Label>
+                <Input type='text' required name='username' id='username'></Input>
+                <Label htmlFor='password'>Password:</Label>
+                <Input type='password' required name='password' id='password'></Input>
+                <Label htmlFor='passwordHint'>PasswordHint:</Label>
+                <Input type='text' required name='passwordHint' id='passwordHint'
+                 ></Input>
+                <AuthSelectWarper>
+                <Label style={{marginRight:"20%"}}htmlFor="authoritySelect">Authority:</Label>
+                <input style={{display:"none"}}  name="id" id="id"></input>
+
+    <select name="authoritySelect" id="authoritySelect" value={this.state.selected} onChange={(e:any)=>this.handleChange(e)} >
+      <option  value="ROLE_BOSS" >BOSS</option>
+      <option  value="ROLE_STAFF" >STAFF</option>
+      <option  style={{display:localStorage.getItem("authority") !== "ROLE_ADMIN" ? "none":""}} value="ROLE_ADMIN"  >ADMIN</option>
+     </select> 
+
+                </AuthSelectWarper>
+                <Buttonwarper>
+                <InputBtn type='submit' ></InputBtn>
+                <Button onClick={(e)=>{
+                  e.preventDefault(),
+                  this.props.hideAddForm()}}>Cancel</Button>
+                </Buttonwarper> 
+           </Form>
+         </LoginWarper> 
+
+        </div>
         
-        }}>
-                   <Text>Add New</Text>
-                   <CrossSymble onClick={(e)=>{
-                   e.preventDefault();
-                   this.props.hideAddForm();
-                   }} >✖️</CrossSymble>
-                   <Label htmlFor='username'> User Name: </Label>
-                   <Input type='text' required name='username' id='username'></Input>
-                   <Label htmlFor='password'>Password:</Label>
-                   <Input type='password' required name='password' id='password'></Input>
-                   <Label htmlFor='passwordHint'>PasswordHint:</Label>
-                   <Input type='text' required name='passwordHint' id='passwordHint'
-                    ></Input>
-                   <AuthSelectWarper>
-                   <Label style={{marginRight:"20%"}}htmlFor="authoritySelect">Authority:</Label>
-                   <input style={{display:"none"}}  name="id" id="id"></input>
-
-       <select name="authoritySelect" id="authoritySelect" value={this.state.selected} onChange={(e:any)=>this.handleChange(e)} >
-         <option  value="ROLE_BOSS" >BOSS</option>
-         <option  value="ROLE_STAFF" >STAFF</option>
-         <option  style={{display:localStorage.getItem("authority") !== "ROLE_ADMIN" ? "none":""}} value="ROLE_ADMIN"  >ADMIN</option>
-        </select> 
-
-                   </AuthSelectWarper>
-                   <Buttonwarper>
-                   <InputBtn type='submit' ></InputBtn>
-                   <Button onClick={(e)=>{
-                     e.preventDefault(),
-                     this.props.hideAddForm()}}>Cancel</Button>
-                   </Buttonwarper> 
-              </Form>
-            </LoginWarper> 
+          
     }
 }
 

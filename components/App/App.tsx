@@ -3,7 +3,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Pages from '../Pages/Pages';
 import styled,{css, ThemeConsumer} from 'styled-components';
-import {BrowserRouter as Router} from 'react-router-dom';
+import {BrowserRouter as Router, HashRouter} from 'react-router-dom';
 import {PAGE} from '../../PAGE';
 import {MEAL} from '../../MEAL';
 import Login from '../Header/components/Banner/Login/Login';
@@ -94,7 +94,7 @@ class App extends React.Component<Props,State> {
    const { dropMenu, currentPage,loginShowOrNot,username,isLogin} = this.state;
 
     return  <div>
-          <Router >
+          <HashRouter >
           <Header dropMenu={dropMenu} toggleDropMenu={this.toggleDropMenu} showLoginOrNot={this.showLoginOrNot}  currentPage={currentPage}
            username={username}
            changeUserName={this.changeUserName}
@@ -111,7 +111,7 @@ class App extends React.Component<Props,State> {
                </LoginContainer>
                <Pages changePage={this.changePage}></Pages>
               <Footer />
-          </Router>
+          </HashRouter>
        </div>
  }
 }

@@ -2,7 +2,8 @@ import React from 'react';
 import styled,{css, ThemeConsumer} from 'styled-components';
 import CSSCONST from '../../../../../../cssConst';
 import axios from 'axios';
-const URL = 'https://test.sealiferestaurantbicheno.com/';
+import AlertFormGlobal from '../../../../../../AlertFormGlobal';
+
 
 const LoginWarper = styled.div`
 
@@ -93,13 +94,15 @@ interface staff {
 }
  interface Props{
      staff:staff;
+     staffs:staff[];
      updateFormShowId:number;
      hideUpdateForm:()=>void;
  }
  interface State {
      selected:string;
+     alertForm:boolean;
  }
-
+let isSame: boolean = false;
 class UpdateForm extends React.Component<Props,State>{
     
     constructor(props:any){
@@ -107,20 +110,37 @@ class UpdateForm extends React.Component<Props,State>{
         super(props);
         this.state={
          selected:"",
+         alertForm:false,
         }
 
         this.updateForm = this.updateForm.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
+    checkIfUserExist(userName:string) {
+      if(isSame){
+        isSame = false;
+      }
+       console.log("this.props.staff.username");
+       console.log(this.props.staff.username);
+       console.log("userName");
+       console.log(userName);
+       this.props.staffs.map((ele)=>{
+        if(ele.username === userName){
+          
+         isSame = true;
+        console.log("checkIfUserExist return true!!!!!!! ");
+        console.log(isSame);
+        
+        }
+        
+      })
+     }
+  
     async updateForm(e: any) {
         e.preventDefault();
         const fd = new FormData(e.target);
-     
-
-      
         const body = {
             // remove empty from start and end
-        
           username: String(fd.get("username")).trim(),
           encodedPassword: String(fd.get("password")).trim(),
           passwordHint:String(fd.get("passwordHint")).trim(),
@@ -130,15 +150,19 @@ class UpdateForm extends React.Component<Props,State>{
            
           ]
         };
-        console.log("HHHHHHHHHHH");
-        console.log(body.username);
-     
-        console.log(body.passwordHint);
-        console.log("ID");
+        this.checkIfUserExist(body.username);
+   
+      
         
-        console.log(body.authorities);
+        if(isSame){
+       
+          
+          this.setState({
+             alertForm:true
+           })
         
-
+        }else{
+  
         await axios({
           method: "patch",
           url: CSSCONST.BACK_URL +"user/"+ String(fd.get("id")).trim(),
@@ -149,7 +173,7 @@ class UpdateForm extends React.Component<Props,State>{
         }).then(
           (res) => {
             
-            window.location.reload();
+          // window.location.reload();
               console.log(res);
      
           },
@@ -159,15 +183,18 @@ class UpdateForm extends React.Component<Props,State>{
           }
         );
       }
+      }
+      hideAlert(){
+        this.setState({
+          alertForm:false,
+        })
+      }
       handleChange(e:any){
            e.preventDefault();
            console.log(e.target.value);
           this.setState({selected: e.target.value});
           console.log("the true selected is : ");
-          
           console.log(this.state.selected);
-          
-
       }
 
 componentWillMount(){
@@ -175,48 +202,55 @@ componentWillMount(){
     this.setState({
        selected:auth,
     })
-    
 }
     
     render(){
-        return <LoginWarper style={{display:this.props.staff.id === this.props.updateFormShowId || this.props.updateFormShowId === 0.1  ? "":"none"}} >
+        return <div>
+               {
+                 this.state.alertForm &&  <AlertFormGlobal hideAlert={()=>this.hideAlert()} >The user name already exists, Please change it.</AlertFormGlobal>
+               } 
+
+             <LoginWarper style={{display:this.props.staff.id === this.props.updateFormShowId || this.props.updateFormShowId === 0.1  ? "":"none"}} >
                 
-               <Form   onSubmit={(e: any) => { this.updateForm(e);
+                <Form   onSubmit={(e: any) => { this.updateForm(e);
+         
+         }}>
+                    <Text>Update</Text>
+                    <CrossSymble onClick={(e)=>{
+                    e.preventDefault();
+                    this.props.hideUpdateForm();
+                    }} >✖️</CrossSymble>
+                    <Label htmlFor='username'> User Name: </Label>
+                    <Input type='text' required name='username' id='username'
+                      defaultValue={this.props.staff.username}
+                    ></Input>
+                    <Label htmlFor='password'>Password:</Label>
+                    <Input type='password' required name='password' id='password'></Input>
+                    <Label htmlFor='passwordHint'>PasswordHint:</Label>
+                    <Input type='text' required name='passwordHint' id='passwordHint'
+                    defaultValue={this.props.staff.passwordHint}></Input>
+                    <AuthSelectWarper>
+                    <Label style={{marginRight:"20%"}}htmlFor="authoritySelect">Authority:</Label>
+                    <input style={{display:"none"}} defaultValue={this.props.staff.id} name="id" id="id"></input>
+ 
+        <select name="authoritySelect" id="authoritySelect" value={this.state.selected} onChange={(e:any)=>this.handleChange(e)} >
+          <option  value="ROLE_BOSS" >BOSS</option>
+          <option  value="ROLE_STAFF" >STAFF</option>
+          <option  style={{display:localStorage.getItem("authority") !== "ROLE_ADMIN" ? "none":""}} value="ROLE_ADMIN"  >ADMIN</option>
+         </select> 
+ 
+                    </AuthSelectWarper>
+                    <Buttonwarper>
+                    <InputBtn type='submit'></InputBtn>
+                    <Button onClick={(e)=>{
+                      e.preventDefault(),
+                      this.props.hideUpdateForm()}}>Cancel</Button>
+                    </Buttonwarper> 
+               </Form>
+             </LoginWarper> 
+        </div>
         
-        }}>
-                   <Text>Update</Text>
-                   <CrossSymble onClick={(e)=>{
-                   e.preventDefault();
-                   this.props.hideUpdateForm();
-                   }} >✖️</CrossSymble>
-                   <Label htmlFor='username'> User Name: </Label>
-                   <Input type='text' required name='username' id='username'
-                     defaultValue={this.props.staff.username}
-                   ></Input>
-                   <Label htmlFor='password'>Password:</Label>
-                   <Input type='password' required name='password' id='password'></Input>
-                   <Label htmlFor='passwordHint'>PasswordHint:</Label>
-                   <Input type='text' required name='passwordHint' id='passwordHint'
-                   defaultValue={this.props.staff.passwordHint}></Input>
-                   <AuthSelectWarper>
-                   <Label style={{marginRight:"20%"}}htmlFor="authoritySelect">Authority:</Label>
-                   <input style={{display:"none"}} defaultValue={this.props.staff.id} name="id" id="id"></input>
-
-       <select name="authoritySelect" id="authoritySelect" value={this.state.selected} onChange={(e:any)=>this.handleChange(e)} >
-         <option  value="ROLE_BOSS" >BOSS</option>
-         <option  value="ROLE_STAFF" >STAFF</option>
-         <option  style={{display:localStorage.getItem("authority") !== "ROLE_ADMIN" ? "none":""}} value="ROLE_ADMIN"  >ADMIN</option>
-        </select> 
-
-                   </AuthSelectWarper>
-                   <Buttonwarper>
-                   <InputBtn type='submit'></InputBtn>
-                   <Button onClick={(e)=>{
-                     e.preventDefault(),
-                     this.props.hideUpdateForm()}}>Cancel</Button>
-                   </Buttonwarper> 
-              </Form>
-            </LoginWarper> 
+         
     }
 }
 

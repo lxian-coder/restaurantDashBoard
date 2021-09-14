@@ -66,7 +66,7 @@ class Banner  extends React.Component<Props,State> {
    localStorage.removeItem("jwt");
    localStorage.removeItem("authority");
    console.log(localStorage.getItem("jwt"));
-   console.log("))))))))))))))))))))))))))))");
+  
    console.log(localStorage.getItem("authority"));
    this.props.LogoutState();
    window.location.reload();
