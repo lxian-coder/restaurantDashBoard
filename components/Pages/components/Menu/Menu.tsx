@@ -127,7 +127,7 @@ class Menu extends React.Component<any, State> {
 		this.changeDelBtn = this.changeDelBtn.bind(this);
 		this.changeSelectID = this.changeSelectID.bind(this);
 		this.successNotion = this.successNotion.bind(this);
-    this.processTheNewOrder = this.processTheNewOrder.bind(this);
+  
 	}
 	changeDelBtn(num: number) {
 		this.setState({
@@ -141,13 +141,10 @@ class Menu extends React.Component<any, State> {
 	}
 
 	async getMenus() {
-		const data = await axios.get(CSSCONST.BACK_URL + "menu").then((res) => {
-            console.log(res);
-			const d = res.data;
+	    await axios.get(CSSCONST.BACK_URL + "menu").then((res) => {
+        
 			res.data.sort(sortIndex);
 			this.setState({ menus: res.data });
-			
-			console.log(res.data);
 		});
 
 		// 排序
@@ -162,14 +159,6 @@ class Menu extends React.Component<any, State> {
 			success: flag,
 		});
 	}
-
-
-
-  processTheNewOrder(){
-    this.state.menus.map((ele,index)=>{
-
-    })
-  }
 
  onDragEnd=(result:DropResult)=>{
     const {source,destination} = result;
@@ -187,9 +176,7 @@ class Menu extends React.Component<any, State> {
 		this.getMenus();
 
 	}
-  componentDidUpdate(){
-    this.processTheNewOrder();
-  }
+
 	render() {
 		return (
 			<PageContainer>

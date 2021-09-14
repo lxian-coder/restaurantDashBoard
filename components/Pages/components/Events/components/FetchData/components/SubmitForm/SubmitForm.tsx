@@ -112,6 +112,7 @@ class SubmitForm extends React.Component<Props,State>{
                (res)=>{
                 console.log(res);
                 this.props.hideForm();
+                window.location.reload();
                },
                (error)=>{
                    console.log(error);
