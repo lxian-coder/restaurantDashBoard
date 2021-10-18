@@ -140,17 +140,17 @@ return <FooterPartWarper>
           <Side2Content>
            <Side2Name>Breakfast</Side2Name>
           8:00am-11:00pm <br />
-          Wednesday to Sunday<br /><br/>
+          Thursday to Monday<br /><br/>
         </Side2Content>
           <Side2Content>
           <Side2Name>Lunch</Side2Name>
           11:00am-3:00pm <br />
-          Wednesday to Sunday<br /><br/>
+          Thursday to Monday<br /><br/>
         </Side2Content>
         <Side2Content>
         <Side2Name>Dinner</Side2Name>
         5:00pm-Late<br/>
-        Tuesday to Saturday<br/><br/>
+        Thursday to Saturday<br/><br/>
        </Side2Content>
        </Side2Warper>
        <Warper>

@@ -90,6 +90,5 @@ class Banner  extends React.Component<Props,State> {
 </BannerBG>
 
  }
-    
 }
 export default Banner;
